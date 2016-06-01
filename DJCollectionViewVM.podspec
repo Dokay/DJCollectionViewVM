@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.author             = { "Dokay" => "dokay.dou@gmail.com" }
   s.platform     = :ios, "6.0"
 
-  s.source       = { :git => "git@bitbucket.org:dokay_ios/djcollectionviewvm.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/Dokay/DJCollectionViewVM.git", :tag => "0.0.1" }
 
   s.source_files  = "Classes", "DJCollectionViewVM/Classes/**/*.{h,m}"
   s.exclude_files = "Classes/Exclude"
