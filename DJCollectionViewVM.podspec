@@ -2,9 +2,9 @@ Pod::Spec.new do |s|
 
   s.name         = "DJCollectionViewVM"
   s.version      = "0.0.1"
-  s.summary      = "DJCollectionViewVM is a ViewModel implemention for UICollectionView"
+  s.summary      = "DJCollectionViewVM is a ViewModel implementation for UICollectionView"
   s.description  = <<-DESC
-                   only for private use,DJCollectionViewVM is a ViewModel implemention for UICollectionView
+                   only for private use,DJCollectionViewVM is a ViewModel implementation for UICollectionView
                    DESC
 
   s.homepage     = "http://douzhongxu.com"
@@ -13,7 +13,7 @@ Pod::Spec.new do |s|
   s.author             = { "Dokay" => "dokay.dou@gmail.com" }
   s.platform     = :ios, "6.0"
 
-  s.source       = { :git => "https://github.com/Dokay/DJCollectionViewVM.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/Dokay/DJCollectionViewVM.git", :tag => s.version.to_s }
 
   s.source_files  = "Classes", "DJCollectionViewVM/Classes/**/*.{h,m}"
   s.exclude_files = "Classes/Exclude"

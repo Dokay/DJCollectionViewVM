@@ -1,6 +1,6 @@
 # DJCollectionViewVM
 
-__DJCollectionViewVM is a ViewModel implemention for UICollectionView.__
+__DJCollectionViewVM is a ViewModel implementation for UICollectionView.__
 
 ## Contact
 
