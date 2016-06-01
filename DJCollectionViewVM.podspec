@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
                    only for private use,DJCollectionViewVM is a ViewModel implementation for UICollectionView
                    DESC
 
-  s.homepage     = "http://douzhongxu.com"
+  s.homepage     = "https://github.com/Dokay"
   s.license      = { :type => "MIT", :file => "LICENSE" }
 
   s.author             = { "Dokay" => "dokay.dou@gmail.com" }
