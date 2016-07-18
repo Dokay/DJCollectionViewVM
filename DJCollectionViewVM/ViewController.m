@@ -62,10 +62,16 @@
     section2.minimumLineSpacing = 6.0f;
     section2.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 30);
     [self.collectionVM addSection:section2];
-    for (NSInteger i = 0; i < 100; i ++) {
+    for (NSInteger i = 0; i < 1000; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
         row.itemSize = CGSizeMake(30, 30);
         row.backgroundColor = [UIColor redColor];
+        [row setPrefetchHander:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"PrefetchHander->%ld",i);
+        }];
+        [row setPrefetchCancelHander:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"PrefetchCancelHander->%ld",i);
+        }];
         [section2 addRow:row];
     }
 //

@@ -22,6 +22,8 @@
 @property (nonatomic, strong) UIView *selectedBackgroundView;
 
 @property (copy, nonatomic) void (^selectionHandler)(id row);
+@property (nonatomic, copy) void(^prefetchHander)(id rowVM);
+@property (nonatomic, copy) void(^prefetchCancelHander)(id rowVM);
 
 + (instancetype)row;
 

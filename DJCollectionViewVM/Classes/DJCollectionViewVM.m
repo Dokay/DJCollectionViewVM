@@ -11,12 +11,14 @@
 #import "DJCollectionViewVM+UIScrollViewDelegate.h"
 #import "DJCollectionViewVM+UICollectionViewDelegate.h"
 #import "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"
+#import "DJPrefetchManager.h"
 
 @interface DJCollectionViewVM()
 
 @property (strong, nonatomic) NSMutableDictionary *registeredXIBs;
 @property (nonatomic, strong) NSMutableDictionary *registeredReuseViewXIBs;
 @property (strong, nonatomic) NSMutableArray *mutableSections;
+@property (nonatomic, strong) DJPrefetchManager *prefetchManager;
 
 @end
 
@@ -130,6 +132,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    [self checkPrefetchEnabled];
     return self.sections.count;
 }
 
@@ -251,6 +254,58 @@
     }
 }
 
+#pragma mark - DJTableViewDataSourcePrefetching
+- (void)collectionView:(UICollectionView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    for (NSIndexPath *indexPath in indexPaths) {
+        DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
+        DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+        if (rowVM.prefetchHander) {
+            rowVM.prefetchHander(rowVM);
+        }
+    }
+}
+
+- (void)collectionView:(UICollectionView *)tableView cancelPrefetchingForRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+{
+    for (NSIndexPath *indexPath in indexPaths) {
+        DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
+        DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+        if (rowVM.prefetchCancelHander) {
+            rowVM.prefetchCancelHander(rowVM);
+        }
+    }
+}
+
+#pragma mark - prefetch methods
+- (void)checkPrefetchEnabled
+{
+    for (DJCollectionViewVMSection *sectionVM in self.sections) {
+        for (DJCollectionViewVMRow *rowVM in sectionVM.rows) {
+            if (rowVM.prefetchHander || rowVM.prefetchCancelHander) {
+                self.bPreetchEnabled = YES;
+                return;
+            }
+        }
+    }
+    self.bPreetchEnabled = NO;
+}
+
+- (void)setBPreetchEnabled:(BOOL)bPreetchEnabled
+{
+#if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
+    self.prefetchManager.bPreetchEnabled = bPreetchEnabled;
+#else
+    if (bPreetchEnabled) {
+        collectionView.prefetchDataSource = self;
+        collectionView.isPrefetchingEnabled = YES;
+    }else{
+        collectionView.prefetchDataSource = nil;
+        collectionView.isPrefetchingEnabled = NO;
+    }
+#endif
+}
+
 #pragma mark - sections manage
 - (NSArray *)sections
 {
@@ -304,5 +359,31 @@
     [self.mutableSections removeObjectAtIndex:index];
 }
 
+#pragma mark - getter
+- (DJPrefetchManager *)prefetchManager
+{
+    if (_prefetchManager == nil) {
+        _prefetchManager = [[DJPrefetchManager alloc] initWithScrollView:self.collectionView];
+        __weak DJCollectionViewVM *weakSelf = self;
+        [_prefetchManager setPrefetchCompletion:^(NSArray *addedArray, NSArray *cancelArray) {
+            for (NSIndexPath *indexPath in addedArray) {
+                DJCollectionViewVMSection *sectionVM = [weakSelf.sections objectAtIndex:indexPath.section];
+                DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+                if (rowVM.prefetchHander) {
+                    rowVM.prefetchHander(rowVM);
+                }
+            }
+            
+            for (NSIndexPath *indexPath in cancelArray) {
+                DJCollectionViewVMSection *sectionVM = [weakSelf.sections objectAtIndex:indexPath.section];
+                DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+                if (rowVM.prefetchCancelHander) {
+                    rowVM.prefetchCancelHander(rowVM);
+                }
+            }
+        }];
+    }
+    return _prefetchManager;
+}
 
 @end
