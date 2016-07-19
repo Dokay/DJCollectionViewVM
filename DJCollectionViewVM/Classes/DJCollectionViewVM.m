@@ -151,21 +151,7 @@
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
     
-    NSString *cellIdentifier = [NSString stringWithFormat:@"DJCollectionViewVMDefaultIdentifier_%@", [row class]];
-    
-    Class cellClass = [self classForCellAtIndexPath:indexPath];
-    if (cellClass) {
-        cellIdentifier = NSStringFromClass(cellClass);
-    }
-    
-    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
-        cellIdentifier = self.registeredXIBs[NSStringFromClass(cellClass)];
-    }
-    
-    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    if (!cell) {
-        NSAssert(NO, @"UICollectionViewCell can not be nil");
-    }
+    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [self dj_collectionView:collectionView cellForItemAtIndexPath:indexPath];
     
     cell.rowIndex = indexPath.row;
     cell.sectionIndex = indexPath.section;
@@ -189,6 +175,28 @@
     
     [cell cellWillAppear];
     
+    return cell;
+}
+
+- (UICollectionViewCell<DJCollectionViewVMCellDelegate> *)dj_collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"DJCollectionViewVMDefaultIdentifier_%@", [row class]];
+    
+    Class cellClass = [self classForCellAtIndexPath:indexPath];
+    if (cellClass) {
+        cellIdentifier = NSStringFromClass(cellClass);
+    }
+    
+    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
+        cellIdentifier = self.registeredXIBs[NSStringFromClass(cellClass)];
+    }
+    
+    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    if (!cell) {
+        NSAssert(NO, @"UICollectionViewCell can not be nil");
+    }
     return cell;
 }
 
@@ -357,6 +365,51 @@
 - (void)removeSectionAtIndex:(NSUInteger)index
 {
     [self.mutableSections removeObjectAtIndex:index];
+}
+
+#pragma mark - height caculate
+- (CGSize)sizeWithAutoLayoutCellWithIndexPath:(NSIndexPath *)indexPath
+{
+    DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
+    if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout
+        || row.heightCaculateType == DJCellHeightCaculateAutoLayout) {
+        UICollectionViewCell<DJCollectionViewVMCellDelegate> *templateLayoutCell = [self dj_collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
+        
+        // Manually calls to ensure consistent behavior with actual cells (that are displayed on screen).
+        [templateLayoutCell prepareForReuse];
+        
+        // Customize and provide content for our template cell.
+        if (templateLayoutCell) {
+            if (!templateLayoutCell.loaded) {
+                [templateLayoutCell cellDidLoad];
+            }
+            [templateLayoutCell cellWillAppear];
+        }
+        
+        CGSize fittingSize = CGSizeZero;
+        
+        if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout) {
+            // If not using auto layout, you have to override "-sizeThatFits:" to provide a fitting size by yourself.
+            // This is the same method used in iOS8 self-sizing cell's implementation.
+            // Note: fitting height should not include separator view.
+            SEL selector = @selector(sizeThatFits:);
+            BOOL inherited = ![templateLayoutCell isMemberOfClass:UITableViewCell.class];
+            BOOL overrided = [templateLayoutCell.class instanceMethodForSelector:selector] != [UITableViewCell instanceMethodForSelector:selector];
+            if (!inherited || !overrided) {
+                NSAssert(NO, @"Customized cell must override '-sizeThatFits:' method if not using auto layout.");
+            }
+            fittingSize = [templateLayoutCell sizeThatFits:CGSizeMake(0, 0)];
+        } else {
+            // Auto layout engine does its math
+            fittingSize = [templateLayoutCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+        }
+        
+        return fittingSize;
+    }else{
+        NSAssert(FALSE, @"heightCaculateType is no ,please set it yes and implement cell height auto");
+        return CGSizeZero;
+    }
 }
 
 #pragma mark - getter

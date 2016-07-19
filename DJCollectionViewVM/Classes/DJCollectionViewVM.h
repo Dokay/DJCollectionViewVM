@@ -48,6 +48,8 @@
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
 
+- (CGSize)sizeWithAutoLayoutCellWithIndexPath:(NSIndexPath *)indexPath;
+
 - (void)addSection:(DJCollectionViewVMSection *)section;
 - (void)addSectionsFromArray:(NSArray *)array;
 - (void)insertSection:(DJCollectionViewVMSection *)section atIndex:(NSUInteger)index;

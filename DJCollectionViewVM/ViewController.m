@@ -87,7 +87,6 @@
     __weak ViewController *weakSelf = self;
     
     self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
-    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:20];

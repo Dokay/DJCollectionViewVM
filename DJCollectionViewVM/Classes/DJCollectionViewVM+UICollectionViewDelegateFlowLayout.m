@@ -29,8 +29,8 @@
                     Class cellClass = [self.registeredClasses objectForKey:row.class];
                     row.itemSize = [cellClass sizeWithRow:row collectionViewVM:self];
                 }else{
-                    //auto height
-//                    row.cellHeight = [self heightWithAutoLayoutCellWithIndexPath:indexPath];
+                    //auto size
+                    row.itemSize = [self sizeWithAutoLayoutCellWithIndexPath:indexPath];
                 }
             }
             return row.itemSize;
