@@ -1,0 +1,381 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4E1FB0141D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */; };
+		4E1FB0151D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */; };
+		4E1FB0161D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */; };
+		4E1FB0171D3E690900F82119 /* DJCollectionViewVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00B1D3E690900F82119 /* DJCollectionViewVM.m */; };
+		4E1FB0181D3E690900F82119 /* DJCollectionViewVMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00D1D3E690900F82119 /* DJCollectionViewVMCell.m */; };
+		4E1FB0191D3E690900F82119 /* DJCollectionViewVMRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00F1D3E690900F82119 /* DJCollectionViewVMRow.m */; };
+		4E1FB01A1D3E690900F82119 /* DJCollectionViewVMSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0111D3E690900F82119 /* DJCollectionViewVMSection.m */; };
+		4E1FB01B1D3E690900F82119 /* DJPrefetchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0131D3E690900F82119 /* DJPrefetchManager.m */; };
+		4E1FB0251D3E691300F82119 /* DJCollectionViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */; };
+		4E1FB0261D3E691300F82119 /* DJCollectionViewImageRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0211D3E691300F82119 /* DJCollectionViewImageRow.m */; };
+		4E1FB0271D3E691300F82119 /* DJCollectionViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0231D3E691300F82119 /* DJCollectionViewTitleCell.m */; };
+		4EF326CA1C881F5000478F41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF326C91C881F5000478F41 /* main.m */; };
+		4EF326CD1C881F5000478F41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF326CC1C881F5000478F41 /* AppDelegate.m */; };
+		4EF326D01C881F5000478F41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF326CF1C881F5000478F41 /* ViewController.m */; };
+		4EF326D51C881F5000478F41 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EF326D41C881F5000478F41 /* Assets.xcassets */; };
+		4EF326D81C881F5000478F41 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4EF326D61C881F5000478F41 /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4E1FB0041D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UICollectionViewDelegate.h"; sourceTree = "<group>"; };
+		4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UICollectionViewDelegate.m"; sourceTree = "<group>"; };
+		4E1FB0061D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"; sourceTree = "<group>"; };
+		4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m"; sourceTree = "<group>"; };
+		4E1FB0081D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UIScrollViewDelegate.h"; sourceTree = "<group>"; };
+		4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UIScrollViewDelegate.m"; sourceTree = "<group>"; };
+		4E1FB00A1D3E690900F82119 /* DJCollectionViewVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVM.h; sourceTree = "<group>"; };
+		4E1FB00B1D3E690900F82119 /* DJCollectionViewVM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewVM.m; sourceTree = "<group>"; };
+		4E1FB00C1D3E690900F82119 /* DJCollectionViewVMCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVMCell.h; sourceTree = "<group>"; };
+		4E1FB00D1D3E690900F82119 /* DJCollectionViewVMCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewVMCell.m; sourceTree = "<group>"; };
+		4E1FB00E1D3E690900F82119 /* DJCollectionViewVMRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVMRow.h; sourceTree = "<group>"; };
+		4E1FB00F1D3E690900F82119 /* DJCollectionViewVMRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewVMRow.m; sourceTree = "<group>"; };
+		4E1FB0101D3E690900F82119 /* DJCollectionViewVMSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVMSection.h; sourceTree = "<group>"; };
+		4E1FB0111D3E690900F82119 /* DJCollectionViewVMSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewVMSection.m; sourceTree = "<group>"; };
+		4E1FB0121D3E690900F82119 /* DJPrefetchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJPrefetchManager.h; sourceTree = "<group>"; };
+		4E1FB0131D3E690900F82119 /* DJPrefetchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJPrefetchManager.m; sourceTree = "<group>"; };
+		4E1FB01E1D3E691300F82119 /* DJCollectionViewImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewImageCell.h; sourceTree = "<group>"; };
+		4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewImageCell.m; sourceTree = "<group>"; };
+		4E1FB0201D3E691300F82119 /* DJCollectionViewImageRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewImageRow.h; sourceTree = "<group>"; };
+		4E1FB0211D3E691300F82119 /* DJCollectionViewImageRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewImageRow.m; sourceTree = "<group>"; };
+		4E1FB0221D3E691300F82119 /* DJCollectionViewTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewTitleCell.h; sourceTree = "<group>"; };
+		4E1FB0231D3E691300F82119 /* DJCollectionViewTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewTitleCell.m; sourceTree = "<group>"; };
+		4EF326C51C881F5000478F41 /* DJComponentCollectionViewVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJComponentCollectionViewVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4EF326C91C881F5000478F41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4EF326CB1C881F5000478F41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4EF326CC1C881F5000478F41 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4EF326CE1C881F5000478F41 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		4EF326CF1C881F5000478F41 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		4EF326D41C881F5000478F41 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		4EF326D71C881F5000478F41 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		4EF326D91C881F5000478F41 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4EF326C21C881F5000478F41 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4E1FB0031D3E690900F82119 /* DJCollectionViewVM */ = {
+			isa = PBXGroup;
+			children = (
+				4E1FB0041D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.h */,
+				4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */,
+				4E1FB0061D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h */,
+				4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */,
+				4E1FB0081D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.h */,
+				4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */,
+				4E1FB00A1D3E690900F82119 /* DJCollectionViewVM.h */,
+				4E1FB00B1D3E690900F82119 /* DJCollectionViewVM.m */,
+				4E1FB00C1D3E690900F82119 /* DJCollectionViewVMCell.h */,
+				4E1FB00D1D3E690900F82119 /* DJCollectionViewVMCell.m */,
+				4E1FB00E1D3E690900F82119 /* DJCollectionViewVMRow.h */,
+				4E1FB00F1D3E690900F82119 /* DJCollectionViewVMRow.m */,
+				4E1FB0101D3E690900F82119 /* DJCollectionViewVMSection.h */,
+				4E1FB0111D3E690900F82119 /* DJCollectionViewVMSection.m */,
+				4E1FB0121D3E690900F82119 /* DJPrefetchManager.h */,
+				4E1FB0131D3E690900F82119 /* DJPrefetchManager.m */,
+			);
+			path = DJCollectionViewVM;
+			sourceTree = "<group>";
+		};
+		4E1FB01D1D3E691300F82119 /* TestClasses */ = {
+			isa = PBXGroup;
+			children = (
+				4E1FB01E1D3E691300F82119 /* DJCollectionViewImageCell.h */,
+				4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */,
+				4E1FB0201D3E691300F82119 /* DJCollectionViewImageRow.h */,
+				4E1FB0211D3E691300F82119 /* DJCollectionViewImageRow.m */,
+				4E1FB0221D3E691300F82119 /* DJCollectionViewTitleCell.h */,
+				4E1FB0231D3E691300F82119 /* DJCollectionViewTitleCell.m */,
+			);
+			path = TestClasses;
+			sourceTree = "<group>";
+		};
+		4EF326BC1C881F5000478F41 = {
+			isa = PBXGroup;
+			children = (
+				4E1FB0031D3E690900F82119 /* DJCollectionViewVM */,
+				4EF326C71C881F5000478F41 /* DJComponentCollectionViewVM */,
+				4EF326C61C881F5000478F41 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4EF326C61C881F5000478F41 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4EF326C51C881F5000478F41 /* DJComponentCollectionViewVM.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4EF326C71C881F5000478F41 /* DJComponentCollectionViewVM */ = {
+			isa = PBXGroup;
+			children = (
+				4E1FB01D1D3E691300F82119 /* TestClasses */,
+				4EF326CB1C881F5000478F41 /* AppDelegate.h */,
+				4EF326CC1C881F5000478F41 /* AppDelegate.m */,
+				4EF326CE1C881F5000478F41 /* ViewController.h */,
+				4EF326CF1C881F5000478F41 /* ViewController.m */,
+				4EF326D41C881F5000478F41 /* Assets.xcassets */,
+				4EF326D61C881F5000478F41 /* LaunchScreen.storyboard */,
+				4EF326D91C881F5000478F41 /* Info.plist */,
+				4EF326C81C881F5000478F41 /* Supporting Files */,
+			);
+			path = DJComponentCollectionViewVM;
+			sourceTree = "<group>";
+		};
+		4EF326C81C881F5000478F41 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4EF326C91C881F5000478F41 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4EF326C41C881F5000478F41 /* DJComponentCollectionViewVM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4EF326DC1C881F5000478F41 /* Build configuration list for PBXNativeTarget "DJComponentCollectionViewVM" */;
+			buildPhases = (
+				4EF326C11C881F5000478F41 /* Sources */,
+				4EF326C21C881F5000478F41 /* Frameworks */,
+				4EF326C31C881F5000478F41 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DJComponentCollectionViewVM;
+			productName = DJComponentCollectionViewVM;
+			productReference = 4EF326C51C881F5000478F41 /* DJComponentCollectionViewVM.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4EF326BD1C881F5000478F41 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DJ;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = dj226;
+				TargetAttributes = {
+					4EF326C41C881F5000478F41 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 4EF326C01C881F5000478F41 /* Build configuration list for PBXProject "DJComponentCollectionViewVM" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4EF326BC1C881F5000478F41;
+			productRefGroup = 4EF326C61C881F5000478F41 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4EF326C41C881F5000478F41 /* DJComponentCollectionViewVM */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4EF326C31C881F5000478F41 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4EF326D81C881F5000478F41 /* LaunchScreen.storyboard in Resources */,
+				4EF326D51C881F5000478F41 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4EF326C11C881F5000478F41 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4E1FB0261D3E691300F82119 /* DJCollectionViewImageRow.m in Sources */,
+				4E1FB0171D3E690900F82119 /* DJCollectionViewVM.m in Sources */,
+				4E1FB01B1D3E690900F82119 /* DJPrefetchManager.m in Sources */,
+				4E1FB0271D3E691300F82119 /* DJCollectionViewTitleCell.m in Sources */,
+				4E1FB0251D3E691300F82119 /* DJCollectionViewImageCell.m in Sources */,
+				4E1FB01A1D3E690900F82119 /* DJCollectionViewVMSection.m in Sources */,
+				4EF326D01C881F5000478F41 /* ViewController.m in Sources */,
+				4EF326CD1C881F5000478F41 /* AppDelegate.m in Sources */,
+				4E1FB0181D3E690900F82119 /* DJCollectionViewVMCell.m in Sources */,
+				4EF326CA1C881F5000478F41 /* main.m in Sources */,
+				4E1FB0141D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m in Sources */,
+				4E1FB0191D3E690900F82119 /* DJCollectionViewVMRow.m in Sources */,
+				4E1FB0161D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m in Sources */,
+				4E1FB0151D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		4EF326D61C881F5000478F41 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4EF326D71C881F5000478F41 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4EF326DA1C881F5000478F41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4EF326DB1C881F5000478F41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4EF326DD1C881F5000478F41 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DJComponentCollectionViewVM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dj226.DJComponentCollectionViewVM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		4EF326DE1C881F5000478F41 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = DJComponentCollectionViewVM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.dj226.DJComponentCollectionViewVM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4EF326C01C881F5000478F41 /* Build configuration list for PBXProject "DJComponentCollectionViewVM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EF326DA1C881F5000478F41 /* Debug */,
+				4EF326DB1C881F5000478F41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4EF326DC1C881F5000478F41 /* Build configuration list for PBXNativeTarget "DJComponentCollectionViewVM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4EF326DD1C881F5000478F41 /* Debug */,
+				4EF326DE1C881F5000478F41 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4EF326BD1C881F5000478F41 /* Project object */;
+}
