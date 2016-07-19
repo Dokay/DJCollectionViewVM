@@ -7,6 +7,11 @@
 //
 
 #import "DJCollectionViewVMCell.h"
+#import "DJCollectionViewVMRow.h"
+
+@interface DJCollectionViewImageRow : DJCollectionViewVMRow
+
+@end
 
 @interface DJCollectionViewImageCell : DJCollectionViewVMCell
 

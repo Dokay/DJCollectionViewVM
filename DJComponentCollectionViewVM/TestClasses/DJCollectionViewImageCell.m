@@ -8,6 +8,10 @@
 
 #import "DJCollectionViewImageCell.h"
 
+@implementation DJCollectionViewImageRow
+
+@end
+
 @interface DJCollectionViewImageCell()
 
 @property (nonatomic, strong) UIImageView *contentImageView;

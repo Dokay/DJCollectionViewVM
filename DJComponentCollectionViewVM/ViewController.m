@@ -8,8 +8,11 @@
 
 #import "ViewController.h"
 #import "DJCollectionViewVM.h"
-#import "DJCollectionViewImageRow.h"
+#import "DJCollectionViewImageCell.h"
 #import "DJCollectionViewTitleCell.h"
+#import "DJCollectionViewLongTitleCell.h"
+
+static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do";
 
 @interface ViewController ()
 
@@ -43,7 +46,7 @@
             break;
         case 2:
         {
-            [self testHead];
+            [self testAutoLayoutWithNib];
         }
             break;
         case 3:
@@ -122,6 +125,28 @@
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
         row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
+        [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
+            NSLog(@"tap %@",row.indexPath);
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
+
+- (void)testAutoLayoutWithNib
+{
+    self.collectionVM[@"DJCollectionViewLongTitleCellRow"] = @"DJCollectionViewLongTitleCell";
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 10.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 100; i ++) {
+        NSInteger random = arc4random() % 40;
+        DJCollectionViewLongTitleCellRow *row = [DJCollectionViewLongTitleCellRow new];
+        row.title = [kConstContent substringToIndex:random];
+        row.heightCaculateType = DJCellHeightCaculateAutoLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
             NSLog(@"tap %@",row.indexPath);
         }];

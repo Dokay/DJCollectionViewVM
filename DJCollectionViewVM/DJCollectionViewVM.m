@@ -15,9 +15,9 @@
 
 @interface DJCollectionViewVM()
 
-@property (strong, nonatomic) NSMutableDictionary *registeredXIBs;
-@property (nonatomic, strong) NSMutableDictionary *registeredReuseViewXIBs;
-@property (strong, nonatomic) NSMutableArray *mutableSections;
+@property (nonatomic, strong) NSMutableDictionary *registeredXIBs;
+@property (nonatomic, strong) NSMutableDictionary *registeredCaculateSizeCells;
+@property (nonatomic, strong) NSMutableArray *mutableSections;
 @property (nonatomic, strong) DJPrefetchManager *prefetchManager;
 
 @end
@@ -151,7 +151,21 @@
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
     
-    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [self dj_collectionView:collectionView cellForItemAtIndexPath:indexPath];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"DJCollectionViewVMDefaultIdentifier_%@", [row class]];
+    
+    Class cellClass = [self classForCellAtIndexPath:indexPath];
+    if (cellClass) {
+        cellIdentifier = NSStringFromClass(cellClass);
+    }
+    
+    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
+        cellIdentifier = self.registeredXIBs[NSStringFromClass(cellClass)];
+    }
+    
+    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
+    if (!cell) {
+        NSAssert(NO, @"UICollectionViewCell can not be nil");
+    }
     
     cell.rowIndex = indexPath.row;
     cell.sectionIndex = indexPath.section;
@@ -175,28 +189,6 @@
     
     [cell cellWillAppear];
     
-    return cell;
-}
-
-- (UICollectionViewCell<DJCollectionViewVMCellDelegate> *)dj_collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
-    DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
-    NSString *cellIdentifier = [NSString stringWithFormat:@"DJCollectionViewVMDefaultIdentifier_%@", [row class]];
-    
-    Class cellClass = [self classForCellAtIndexPath:indexPath];
-    if (cellClass) {
-        cellIdentifier = NSStringFromClass(cellClass);
-    }
-    
-    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
-        cellIdentifier = self.registeredXIBs[NSStringFromClass(cellClass)];
-    }
-    
-    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    if (!cell) {
-        NSAssert(NO, @"UICollectionViewCell can not be nil");
-    }
     return cell;
 }
 
@@ -368,13 +360,37 @@
 }
 
 #pragma mark - height caculate
+- (UICollectionViewCell<DJCollectionViewVMCellDelegate> *)collectionViewCellForCaculateSizeWithIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell;
+    
+    Class cellClass = [self classForCellAtIndexPath:indexPath];
+
+    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
+        NSString *cellClassName = NSStringFromClass(cellClass);
+        cell = [self.registeredCaculateSizeCells objectForKey:cellClassName];
+        if (cell == nil) {
+            cell = [[NSBundle mainBundle] loadNibNamed:cellClassName owner:self options:nil][0];
+            [self.registeredCaculateSizeCells setObject:cell forKey:cellClassName];
+        }
+    }else{
+        
+    }
+    
+    DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
+    cell.rowVM = row;
+    
+    return cell;
+}
+
 - (CGSize)sizeWithAutoLayoutCellWithIndexPath:(NSIndexPath *)indexPath
 {
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
     if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout
         || row.heightCaculateType == DJCellHeightCaculateAutoLayout) {
-        UICollectionViewCell<DJCollectionViewVMCellDelegate> *templateLayoutCell = [self dj_collectionView:self.collectionView cellForItemAtIndexPath:indexPath];
+        UICollectionViewCell<DJCollectionViewVMCellDelegate> *templateLayoutCell = [self collectionViewCellForCaculateSizeWithIndexPath:indexPath];
         
         // Manually calls to ensure consistent behavior with actual cells (that are displayed on screen).
         [templateLayoutCell prepareForReuse];
