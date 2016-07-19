@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "DJCollectionViewVM.h"
 #import "DJCollectionViewImageRow.h"
+#import "DJCollectionViewTitleCell.h"
 
 @interface ViewController ()
 
@@ -25,86 +26,159 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     [self.view addSubview:self.collectionView];
-    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
+    NSDictionary *views = NSDictionaryOfVariableBindings(_collectionView);
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_collectionView]|" options:0 metrics:nil views:views]];
+    [self.view addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_collectionView]|" options:0 metrics:nil views:views]];
     
-    [self testRow];
+    switch (self.type) {
+        case 0:
+        {
+            [self testCollection];
+        }
+            break;
+        case 1:
+        {
+            [self testNormal];
+        }
+            break;
+        case 2:
+        {
+            [self testHead];
+        }
+            break;
+        case 3:
+        {
+            [self testConfigHead];
+        }
+            break;
+        default:
+            break;
+    }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)testCollection
+{
+    NSArray *testDataSource = @[@{@"title":@"SimpleDemo",
+                                  @"jumpID":@(1)},
+                                @{@"title":@"AutoLayoutWithNibDemo",
+                                  @"jumpID":@(2)},
+                                @{@"title":@"AutoLayoutWithOutNibNibDemo",
+                                  @"jumpID":@(3)},
+                                @{@"title":@"FrameLayoutDemo",
+                                  @"jumpID":@(4)},
+                                @{@"title":@"MoveRowDemo",
+                                  @"jumpID":@(5)},
+                                @{@"title":@"PrefetchDemo",
+                                  @"jumpID":@(6)},
+                                @{@"title":@"DeleteDemo",
+                                  @"jumpID":@(7)},
+                                @{@"title":@"EditAction",
+                                  @"jumpID":@(8)},
+                                @{@"title":@"InsertDemo",
+                                  @"jumpID":@(9)},
+                                @{@"title":@"IndexTitle",
+                                  @"jumpID":@(10)},];
+    
+    __weak ViewController *weakSelf = self;
+    
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
+    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:20];
+    contentSection.minimumLineSpacing = 10.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    
+    for (NSDictionary *testDic in testDataSource) {
+        DJCollectionViewTitleCellRow *testRowVM = [DJCollectionViewTitleCellRow new];
+        testRowVM.title = [testDic valueForKey:@"title"];
+        [testRowVM setSelectionHandler:^(DJCollectionViewTitleCellRow *rowVM) {
+            ViewController *aViewController = [ViewController new];
+            aViewController.title = rowVM.title;
+            aViewController.type = [[testDic objectForKey:@"jumpID"] integerValue];
+            [weakSelf.navigationController pushViewController:aViewController animated:YES];
+        }];
+        [contentSection addRow:testRowVM];
+    }
+    
+    [self.collectionView reloadData];
 }
 
-- (void)testRow
+- (void)testNormal
 {
     [self.collectionVM removeAllSections];
     
-    DJCollectionViewVMSection *section1 = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
-//    section1.sectionInset = UIEdgeInsetsMake(20, 0, 20, 0);
-    section1.sectionInset = UIEdgeInsetsZero;
-    section1.minimumLineSpacing = 0.0f;
-    section1.minimumInteritemSpacing = 0.0f;
-    [self.collectionVM addSection:section1];
-    for (NSInteger i = 0; i < 30; i ++) {
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 10.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 100; i ++) {
+        NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.itemSize = CGSizeMake(self.view.frame.size.width/2 - 30, 40);
+        row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
             NSLog(@"tap %@",row.indexPath);
         }];
-        [section1 addRow:row];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
+
+- (void)testHead
+{
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
+    contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 60, 0);
+    contentSection.minimumLineSpacing = 6.0f;
+//    contentSection.footerReferenceSize = CGSizeMake(self.view.frame.size.width, 60);
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 20; i ++) {
+        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
+        row.itemSize = CGSizeMake(100, 100);
+        row.backgroundColor = [UIColor blueColor];
+        [contentSection addRow:row];
     }
     
-    DJCollectionViewVMSection *section2 = [DJCollectionViewVMSection sectionWithHeaderHeight:20];
-    [section2 setConfigResuseHeadViewHandler:^(UICollectionReusableView *view, DJCollectionViewVMSection *section) {
+    [self.collectionView reloadData];
+}
+
+- (void)testConfigHead
+{
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:20];
+    [contentSection setConfigResuseHeadViewHandler:^(UICollectionReusableView *view, DJCollectionViewVMSection *section) {
         view.backgroundColor = [UIColor blueColor];
     }];
-    section2.minimumLineSpacing = 6.0f;
-    section2.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 30);
-    [self.collectionVM addSection:section2];
-    for (NSInteger i = 0; i < 100; i ++) {
+    contentSection.minimumLineSpacing = 6.0f;
+    contentSection.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 60);
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 200; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.itemSize = CGSizeMake(30, 30);
+        row.itemSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
-        [section2 addRow:row];
+        [contentSection addRow:row];
     }
-//
-//    DJCollectionViewVMSection *section3 = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
-//    section3.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
-//    section3.minimumLineSpacing = 6.0f;
-//    section3.footerReferenceSize = self.testHeadView.bounds.size;
-//    [self.collectionVM addSection:section3];
-//    for (NSInteger i = 0; i < 100; i ++) {
-//        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-//        row.itemSize = CGSizeMake(100, 100);
-//        row.backgroundColor = [UIColor redColor];
-//        [section3 addRow:row];
-//    }
-//    
-//    DJCollectionViewVMSection *section4 = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
-//    section4.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
-//    section4.minimumLineSpacing = 6.0f;
-//    section4.footerReferenceSize = self.testHeadView.bounds.size;
-//    [self.collectionVM addSection:section4];
-//    for (NSInteger i = 0; i < 100; i ++) {
-//        DJCollectionViewVMRow *row = [DJCollectionViewImageRow new];
-//        row.itemSize = CGSizeMake(100, 100);
-//        row.backgroundColor = [UIColor redColor];
-//        [section4 addRow:row];
-//    }
+    [self.collectionView reloadData];
+}
+
+- (void)testCustomCell
+{
+    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
     
-    DJCollectionViewVMSection *section4 = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
-    section4.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
-    section4.minimumLineSpacing = 6.0f;
-    section4.footerReferenceSize = self.testHeadView.bounds.size;
-    [self.collectionVM addSection:section4];
+    [self.collectionVM removeAllSections];
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
+    contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
+    contentSection.minimumLineSpacing = 6.0f;
+    [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 100; i ++) {
-        DJCollectionViewVMRow *row = [DJCollectionViewImageRow new];
+        DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
         row.itemSize = CGSizeMake(100, 100);
-        row.backgroundColor = [UIColor redColor];
-        [section4 addRow:row];
+        [contentSection addRow:row];
     }
-    
     [self.collectionView reloadData];
 }
 
@@ -117,8 +191,9 @@
         layout.minimumLineSpacing = 0;
         
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
-        _collectionView = [[UICollectionView alloc] initWithFrame:self.view.bounds collectionViewLayout:layout];
+        _collectionView = [[UICollectionView alloc] initWithFrame:CGRectNull collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor lightGrayColor];
+        _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     }
     return _collectionView;
 }

@@ -23,10 +23,22 @@
         }
         
         if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-            if (flowFayout.itemSize.width != 0 && flowFayout.itemSize.height != 0) {
-                return flowFayout.itemSize;
+            
+            if (row.itemSize.height == 0 || row.dj_caculateHeightForceRefresh) {
+                if (row.heightCaculateType == DJCellHeightCaculateDefault) {
+                    Class cellClass = [self.registeredClasses objectForKey:row.class];
+                    row.itemSize = [cellClass sizeWithRow:row collectionViewVM:self];
+                }else{
+                    //auto height
+//                    row.cellHeight = [self heightWithAutoLayoutCellWithIndexPath:indexPath];
+                }
             }
+            return row.itemSize;
+            
+//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
+//            if (flowFayout.itemSize.width != 0 && flowFayout.itemSize.height != 0) {
+//                return flowFayout.itemSize;
+//            }
         }
     }
     return CGSizeZero;
