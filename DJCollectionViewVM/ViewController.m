@@ -51,6 +51,11 @@
             [self testConfigHead];
         }
             break;
+        case 6:
+        {
+            [self testPrefetch];
+        }
+            break;
         default:
             break;
     }
@@ -133,7 +138,6 @@
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
     contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 60, 0);
     contentSection.minimumLineSpacing = 6.0f;
-//    contentSection.footerReferenceSize = CGSizeMake(self.view.frame.size.width, 60);
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 20; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
@@ -180,6 +184,35 @@
         [contentSection addRow:row];
     }
     [self.collectionView reloadData];
+}
+
+- (void)testPrefetch
+{
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 10.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 1000; i ++) {
+        NSInteger random = arc4random() % 10;
+        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
+        row.itemSize = CGSizeMake(random * 20, 40);
+        row.backgroundColor = [UIColor redColor];
+        [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
+            NSLog(@"tap %@",row.indexPath);
+        }];
+        [row setPrefetchHander:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"PrefetchHander->%ld",i);
+        }];
+        [row setPrefetchCancelHander:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"PrefetchCancelHander->%ld",i);
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+    
+    
 }
 
 #pragma mark - getter

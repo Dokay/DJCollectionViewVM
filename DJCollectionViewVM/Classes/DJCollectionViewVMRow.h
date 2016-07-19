@@ -31,6 +31,8 @@ typedef NS_ENUM(NSInteger,DJCellHeightCaculateType){
 @property (nonatomic, assign) BOOL dj_caculateHeightForceRefresh;
 
 @property (copy, nonatomic) void (^selectionHandler)(id row);
+@property (nonatomic, copy) void(^prefetchHander)(id rowVM);
+@property (nonatomic, copy) void(^prefetchCancelHander)(id rowVM);
 
 + (instancetype)row;
 

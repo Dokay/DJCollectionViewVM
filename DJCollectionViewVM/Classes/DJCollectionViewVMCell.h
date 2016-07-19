@@ -13,11 +13,10 @@
 @class DJCollectionViewVMRow;
 
 @protocol DJCollectionViewVMCellDelegate <NSObject>
-
-@property (weak, nonatomic  ) UICollectionView        *parentCollectionView;
 @property (weak, nonatomic  ) DJCollectionViewVM *collectionViewVM;
+@property (weak, nonatomic  ) UICollectionView *parentCollectionView;
 @property (weak, nonatomic  ) DJCollectionViewVMSection *section;
-@property (strong, nonatomic) DJCollectionViewVMRow     *rowVM;
+@property (strong, nonatomic) DJCollectionViewVMRow *rowVM;
 @property (assign, nonatomic) NSInteger rowIndex;
 @property (assign, nonatomic) NSInteger sectionIndex;
 @property (nonatomic, assign) BOOL loaded;
