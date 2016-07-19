@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4E0D5ABD1D3DFD6800412D9B /* DJCollectionViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0D5ABC1D3DFD6800412D9B /* DJCollectionViewTitleCell.m */; };
 		4E0BAE561D3D1FE900F81CD4 /* DJPrefetchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0BAE551D3D1FE900F81CD4 /* DJPrefetchManager.m */; };
+		4E0D5ABD1D3DFD6800412D9B /* DJCollectionViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E0D5ABC1D3DFD6800412D9B /* DJCollectionViewTitleCell.m */; };
 		4EF326CA1C881F5000478F41 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF326C91C881F5000478F41 /* main.m */; };
 		4EF326CD1C881F5000478F41 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF326CC1C881F5000478F41 /* AppDelegate.m */; };
 		4EF326D01C881F5000478F41 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EF326CF1C881F5000478F41 /* ViewController.m */; };
@@ -28,10 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		4E0D5ABB1D3DFD6800412D9B /* DJCollectionViewTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewTitleCell.h; sourceTree = "<group>"; };
-		4E0D5ABC1D3DFD6800412D9B /* DJCollectionViewTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewTitleCell.m; sourceTree = "<group>"; };
 		4E0BAE541D3D1FE900F81CD4 /* DJPrefetchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJPrefetchManager.h; sourceTree = "<group>"; };
 		4E0BAE551D3D1FE900F81CD4 /* DJPrefetchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJPrefetchManager.m; sourceTree = "<group>"; };
+		4E0D5ABB1D3DFD6800412D9B /* DJCollectionViewTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewTitleCell.h; sourceTree = "<group>"; };
+		4E0D5ABC1D3DFD6800412D9B /* DJCollectionViewTitleCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewTitleCell.m; sourceTree = "<group>"; };
 		4EF326C51C881F5000478F41 /* DJCollectionViewVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJCollectionViewVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF326C91C881F5000478F41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4EF326CB1C881F5000478F41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -335,7 +335,7 @@
 				INFOPLIST_FILE = DJCollectionViewVM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hengda.DJCollectionViewVM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dj226.DJCollectionViewVM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -348,7 +348,7 @@
 				INFOPLIST_FILE = DJCollectionViewVM/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.hengda.DJCollectionViewVM;
+				PRODUCT_BUNDLE_IDENTIFIER = com.dj226.DJCollectionViewVM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
