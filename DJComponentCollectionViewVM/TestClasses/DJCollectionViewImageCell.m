@@ -39,8 +39,8 @@
 - (void)setupUI
 {
     [self.contentView addSubview:self.contentImageView];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentImageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
-     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentImageView]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentImageView(50)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
+     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentImageView(50)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
 }
 
 - (UIImageView *)contentImageView
@@ -48,7 +48,7 @@
     if (_contentImageView == nil) {
         _contentImageView = [UIImageView new];
         _contentImageView.translatesAutoresizingMaskIntoConstraints = NO;
-        _contentImageView.image = [UIImage imageNamed:@"icon_chat_kf"];
+        _contentImageView.image = [UIImage imageNamed:@"test_head"];
     }
     return _contentImageView;
 }

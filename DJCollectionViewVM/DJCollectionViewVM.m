@@ -365,16 +365,19 @@
     UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell;
     
     Class cellClass = [self classForCellAtIndexPath:indexPath];
-
+    NSString *cellClassName = NSStringFromClass(cellClass);
     if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
-        NSString *cellClassName = NSStringFromClass(cellClass);
         cell = [self.registeredCaculateSizeCells objectForKey:cellClassName];
         if (cell == nil) {
             cell = [[NSBundle mainBundle] loadNibNamed:cellClassName owner:self options:nil][0];
             [self.registeredCaculateSizeCells setObject:cell forKey:cellClassName];
         }
     }else{
-        
+        cell = [self.registeredCaculateSizeCells objectForKey:cellClassName];
+        if (cell == nil) {
+            cell = [[cellClass alloc] init];
+            [self.registeredCaculateSizeCells setObject:cell forKey:cellClassName];
+        }
     }
     
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];

@@ -51,7 +51,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             break;
         case 3:
         {
-            [self testConfigHead];
+            [self testAutoLayoutWithoutNib];
         }
             break;
         case 6:
@@ -70,7 +70,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
                                   @"jumpID":@(1)},
                                 @{@"title":@"AutoLayoutWithNibDemo",
                                   @"jumpID":@(2)},
-                                @{@"title":@"AutoLayoutWithOutNibNibDemo",
+                                @{@"title":@"AutoLayoutWithoutNibNibDemo",
                                   @"jumpID":@(3)},
                                 @{@"title":@"FrameLayoutDemo",
                                   @"jumpID":@(4)},
@@ -125,8 +125,8 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
         row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
-        [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
-            NSLog(@"tap %@",row.indexPath);
+        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap %@",rowVM.indexPath);
         }];
         [contentSection addRow:row];
     }
@@ -147,8 +147,28 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         DJCollectionViewLongTitleCellRow *row = [DJCollectionViewLongTitleCellRow new];
         row.title = [kConstContent substringToIndex:random];
         row.heightCaculateType = DJCellHeightCaculateAutoLayout;
-        [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
-            NSLog(@"tap %@",row.indexPath);
+        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap %@",rowVM.indexPath);
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
+
+- (void)testAutoLayoutWithoutNib
+{
+    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 10.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 100; i ++) {
+        DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
+        row.heightCaculateType = DJCellHeightCaculateAutoLayout;
+        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap %@",rowVM.indexPath);
         }];
         [contentSection addRow:row];
     }
