@@ -54,6 +54,7 @@
         self.mutableSections   = [[NSMutableArray alloc] init];
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
+        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
         
         [self registerDefaultClasses];
     }
@@ -359,7 +360,7 @@
     [self.mutableSections removeObjectAtIndex:index];
 }
 
-#pragma mark - height caculate
+#pragma mark - auto size caculate
 - (UICollectionViewCell<DJCollectionViewVMCellDelegate> *)collectionViewCellForCaculateSizeWithIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell;
@@ -405,6 +406,9 @@
             }
             [templateLayoutCell cellWillAppear];
         }
+        
+//        [templateLayoutCell setNeedsLayout];
+//        [templateLayoutCell layoutIfNeeded];
         
         CGSize fittingSize = CGSizeZero;
         

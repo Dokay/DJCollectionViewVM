@@ -142,10 +142,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.minimumLineSpacing = 10.0f;
     contentSection.minimumInteritemSpacing = 10.0f;
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 100; i ++) {
-        NSInteger random = arc4random() % 40;
+    
+    NSArray *wordsArray = [kConstContent componentsSeparatedByString:@" "];
+    for (NSInteger i = 0; i < wordsArray.count; i ++) {
         DJCollectionViewLongTitleCellRow *row = [DJCollectionViewLongTitleCellRow new];
-        row.title = [kConstContent substringToIndex:random];
+        row.title = wordsArray[i];
         row.heightCaculateType = DJCellHeightCaculateAutoLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
