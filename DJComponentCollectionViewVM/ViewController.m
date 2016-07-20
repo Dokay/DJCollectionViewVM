@@ -69,6 +69,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             [self testPrefetch];
         }
             break;
+        case 7:
+        {
+            [self testCustomNormalHeadView];
+        }
+            break;
         default:
             break;
     }
@@ -88,7 +93,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
                                   @"jumpID":@(5)},
                                 @{@"title":@"PrefetchDemo",
                                   @"jumpID":@(6)},
-                                @{@"title":@"DeleteDemo",
+                                @{@"title":@"CustomNormalHeadViewDemo",
                                   @"jumpID":@(7)},
                                 @{@"title":@"EditAction",
                                   @"jumpID":@(8)},
@@ -239,13 +244,14 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionView reloadData];
 }
 
-- (void)testHead
+- (void)testCustomNormalHeadView
 {
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
-    contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 60, 0);
+    contentSection.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
     contentSection.minimumLineSpacing = 6.0f;
+    contentSection.headerReferenceSize = self.testHeadView.frame.size;
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 20; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
@@ -311,10 +317,10 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             NSLog(@"tap %@",row.indexPath);
         }];
         [row setPrefetchHander:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"PrefetchHander->%ld",i);
+            NSLog(@"PrefetchHander->%ld",(long)i);
         }];
         [row setPrefetchCancelHander:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"PrefetchCancelHander->%ld",i);
+            NSLog(@"PrefetchCancelHander->%ld",(long)i);
         }];
         [contentSection addRow:row];
     }
@@ -328,9 +334,6 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     if (_collectionView == nil) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
-        layout.minimumInteritemSpacing = 0;
-        layout.minimumLineSpacing = 0;
-        
         layout.scrollDirection = UICollectionViewScrollDirectionVertical;
         _collectionView = [[UICollectionView alloc] initWithFrame:CGRectNull collectionViewLayout:layout];
         _collectionView.backgroundColor = [UIColor lightGrayColor];
