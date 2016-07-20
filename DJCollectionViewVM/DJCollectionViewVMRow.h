@@ -21,7 +21,7 @@ typedef NS_ENUM(NSInteger,DJCellHeightCaculateType){
 @property (nonatomic, weak) DJCollectionViewVMSection *section;
 @property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, strong) NSObject *paramObject;
-@property (nonatomic, assign) CGSize   itemSize;
+@property (nonatomic, assign) CGSize   rowSize;
 
 @property (nonatomic, strong) UIColor *backgroundColor;
 @property (nonatomic, strong) UIView *backgroundView;
