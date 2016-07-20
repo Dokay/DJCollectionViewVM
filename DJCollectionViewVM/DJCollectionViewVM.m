@@ -13,7 +13,7 @@
 #import "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"
 #import "DJPrefetchManager.h"
 
-@interface DJCollectionViewVM()
+@interface DJCollectionViewVM()<DJCollectionViewDataSourcePrefetching>
 
 @property (nonatomic, strong) NSMutableDictionary *registeredXIBs;
 @property (nonatomic, strong) NSMutableDictionary *registeredCaculateSizeCells;
@@ -262,7 +262,7 @@
 }
 
 #pragma mark - DJTableViewDataSourcePrefetching
-- (void)collectionView:(UICollectionView *)tableView prefetchRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+- (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
     for (NSIndexPath *indexPath in indexPaths) {
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
@@ -273,7 +273,7 @@
     }
 }
 
-- (void)collectionView:(UICollectionView *)tableView cancelPrefetchingForRowsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
+- (void)collectionView:(UICollectionView *)collectionView cancelPrefetchingForItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
     for (NSIndexPath *indexPath in indexPaths) {
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
@@ -304,11 +304,11 @@
     self.prefetchManager.bPreetchEnabled = bPreetchEnabled;
 #else
     if (bPreetchEnabled) {
-        collectionView.prefetchDataSource = self;
-        collectionView.isPrefetchingEnabled = YES;
+        self.collectionView.prefetchDataSource = (id<DJCollectionViewDataSourcePrefetching>)self;
+        self.collectionView.prefetchingEnabled = YES;
     }else{
-        collectionView.prefetchDataSource = nil;
-        collectionView.isPrefetchingEnabled = NO;
+        self.collectionView.prefetchDataSource = nil;
+        self.collectionView.prefetchingEnabled = NO;
     }
 #endif
 }
