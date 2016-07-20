@@ -6,10 +6,10 @@
 //  Copyright © 2016年 dj226. All rights reserved.
 //
 
-#import "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"
+#import "DJCollectionViewVM+FlowLayout.h"
 #import "DJCollectionViewVMCell.h"
 
-@implementation DJCollectionViewVM (UICollectionViewDelegateFlowLayout)
+@implementation DJCollectionViewVM (FlowLayout)
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {

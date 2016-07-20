@@ -10,7 +10,7 @@
 		4E076D4F1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E076D4E1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m */; };
 		4E076D521D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E076D511D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m */; };
 		4E1FB0141D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */; };
-		4E1FB0151D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */; };
+		4E1FB0151D3E690900F82119 /* DJCollectionViewVM+FlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0071D3E690900F82119 /* DJCollectionViewVM+FlowLayout.m */; };
 		4E1FB0161D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */; };
 		4E1FB0171D3E690900F82119 /* DJCollectionViewVM.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00B1D3E690900F82119 /* DJCollectionViewVM.m */; };
 		4E1FB0181D3E690900F82119 /* DJCollectionViewVMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00D1D3E690900F82119 /* DJCollectionViewVMCell.m */; };
@@ -35,8 +35,8 @@
 		4E076D511D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewTitleCellRow.m; sourceTree = "<group>"; };
 		4E1FB0041D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UICollectionViewDelegate.h"; sourceTree = "<group>"; };
 		4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UICollectionViewDelegate.m"; sourceTree = "<group>"; };
-		4E1FB0061D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"; sourceTree = "<group>"; };
-		4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m"; sourceTree = "<group>"; };
+		4E1FB0061D3E690900F82119 /* DJCollectionViewVM+FlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+FlowLayout.h"; sourceTree = "<group>"; };
+		4E1FB0071D3E690900F82119 /* DJCollectionViewVM+FlowLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+FlowLayout.m"; sourceTree = "<group>"; };
 		4E1FB0081D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UIScrollViewDelegate.h"; sourceTree = "<group>"; };
 		4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UIScrollViewDelegate.m"; sourceTree = "<group>"; };
 		4E1FB00A1D3E690900F82119 /* DJCollectionViewVM.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVM.h; sourceTree = "<group>"; };
@@ -83,8 +83,8 @@
 			children = (
 				4E1FB0041D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.h */,
 				4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */,
-				4E1FB0061D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h */,
-				4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */,
+				4E1FB0061D3E690900F82119 /* DJCollectionViewVM+FlowLayout.h */,
+				4E1FB0071D3E690900F82119 /* DJCollectionViewVM+FlowLayout.m */,
 				4E1FB0081D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.h */,
 				4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */,
 				4E1FB00A1D3E690900F82119 /* DJCollectionViewVM.h */,
@@ -247,7 +247,7 @@
 				4E1FB0191D3E690900F82119 /* DJCollectionViewVMRow.m in Sources */,
 				4E1FB02B1D3E6A7600F82119 /* DJCollectionViewLongTitleCell.m in Sources */,
 				4E1FB0161D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m in Sources */,
-				4E1FB0151D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m in Sources */,
+				4E1FB0151D3E690900F82119 /* DJCollectionViewVM+FlowLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

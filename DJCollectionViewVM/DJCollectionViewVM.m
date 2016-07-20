@@ -10,7 +10,7 @@
 #import "DJCollectionViewVMCell.h"
 #import "DJCollectionViewVM+UIScrollViewDelegate.h"
 #import "DJCollectionViewVM+UICollectionViewDelegate.h"
-#import "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"
+#import "DJCollectionViewVM+FlowLayout.h"
 #import "DJPrefetchManager.h"
 
 @interface DJCollectionViewVM()<DJCollectionViewDataSourcePrefetching>
@@ -76,6 +76,9 @@
 - (void)registerDefaultClasses
 {
     self[@"DJCollectionViewVMRow"] = @"DJCollectionViewVMCell";
+    
+    [self registerForReuseHeadViewWithReuseIdentifier:kHeadReuseIdentifier];
+    [self registerForReuseFootViewWithReuseIdentifier:kFootReuseIdentifier];
 }
 
 - (void)registerClass:(NSString *)rowClass forCellWithReuseIdentifier:(NSString *)identifier
@@ -201,38 +204,51 @@
     
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
-        NSAssert(section.headReuseIdentifier.length > 0, @"section.headReuseIdentifier can not be empty");
-        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:section.headReuseIdentifier forIndexPath:indexPath];
-        if (view) {
-            if (section.headerView && ![section.headerView.superview isEqual:view]) {
-                [view addSubview:section.headerView];
-                section.headerView.frame = view.bounds;
-            }
-            if ([section respondsToSelector:@selector(setConfigResuseHeadViewHandler:)]){
-                DJCollectionViewVMSection *headSection = (DJCollectionViewVMSection *)section;
-                if (headSection.configResuseHeadViewHandler) {
-                    headSection.configResuseHeadViewHandler(view,headSection);
-                }
-            }
+        //        NSAssert(section.headReuseIdentifier.length > 0, @"section.headReuseIdentifier can not be empty");
+        
+        if (section.headerView) {
+            [section.headerView removeFromSuperview];
+            //                [view.subviews performSelector:@selector(removeFromSuperview)];
+            UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kHeadReuseIdentifier forIndexPath:indexPath];
+            [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [obj removeFromSuperview];
+            }];
+            [view addSubview:section.headerView];
+            section.headerView.frame = view.bounds;
+            return view;
+        }else{
+            
         }
-        return view;
+        //            if ([section respondsToSelector:@selector(setConfigResuseHeadViewHandler:)]){
+        //                DJCollectionViewVMSection *headSection = (DJCollectionViewVMSection *)section;
+        //                if (headSection.configResuseHeadViewHandler) {
+        //                    headSection.configResuseHeadViewHandler(view,headSection);
+        //                }
+        //            }
+        return nil;
+        
     }else{
         DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.row];
-        NSAssert(section.footReuseIdentifier.length > 0, @"section.footReuseIdentifier can not be empty");
-        UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:section.footReuseIdentifier forIndexPath:indexPath];
-        if (view) {
-            if (section.footerView && ![section.footerView.superview isEqual:view]) {
-                [view addSubview:section.footerView];
-                section.footerView.frame = view.bounds;
-            }
-            if ([section respondsToSelector:@selector(setConfigResuseFootViewHandler:)]){
-                DJCollectionViewVMSection *headSection = (DJCollectionViewVMSection *)section;
-                if (headSection.configResuseFootViewHandler) {
-                    headSection.configResuseFootViewHandler(view,headSection);
-                }
-            }
+        //        NSAssert(section.footReuseIdentifier.length > 0, @"section.footReuseIdentifier can not be empty");
+        
+        if (section.footerView) {
+            [section.footerView removeFromSuperview];
+            //                [view.subviews performSelector:@selector(removeFromSuperview)];
+            UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kFootReuseIdentifier forIndexPath:indexPath];
+            [view.subviews enumerateObjectsUsingBlock:^(__kindof UIView * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                [obj removeFromSuperview];
+            }];
+            [view addSubview:section.footerView];
+            section.footerView.frame = view.bounds;
+            return view;
         }
-        return view;
+        //            if ([section respondsToSelector:@selector(setConfigResuseFootViewHandler:)]){
+        //                DJCollectionViewVMSection *headSection = (DJCollectionViewVMSection *)section;
+        //                if (headSection.configResuseFootViewHandler) {
+        //                    headSection.configResuseFootViewHandler(view,headSection);
+        //                }
+        //            }
+        return nil;
     }
 }
 
@@ -322,12 +338,6 @@
 - (void)addSection:(DJCollectionViewVMSection *)section
 {
     section.collectionViewVM = self;
-    if (section.headerReferenceSize.height > 0) {
-        [self registerForReuseHeadViewWithReuseIdentifier:section.headReuseIdentifier];
-    }
-    if (section.footerReferenceSize.height > 0) {
-        [self registerForReuseFootViewWithReuseIdentifier:section.footReuseIdentifier];
-    }
     [self.mutableSections addObject:section];
 }
 

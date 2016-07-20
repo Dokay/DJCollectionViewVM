@@ -8,6 +8,6 @@
 
 #import "DJCollectionViewVM.h"
 
-@interface DJCollectionViewVM (UICollectionViewDelegateFlowLayout)
+@interface DJCollectionViewVM (FlowLayout)
 
 @end

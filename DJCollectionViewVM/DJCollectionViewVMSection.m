@@ -81,12 +81,10 @@
     self = [self init];
     if (self){
         self.headerView = headerView;
-        self.headerView.translatesAutoresizingMaskIntoConstraints = YES;
+//        self.headerView.translatesAutoresizingMaskIntoConstraints = YES;
         self.footerView = footerView;
-        self.footerView.translatesAutoresizingMaskIntoConstraints = YES;
+//        self.footerView.translatesAutoresizingMaskIntoConstraints = YES;
         _mutableRows = [[NSMutableArray alloc] init];
-        
-        //TODO:Dokay support UIView
     }
     return self;
 }
@@ -95,8 +93,7 @@
 {
     self = [super init];
     if (self) {
-        self.headReuseIdentifier = @"UICollectionReusableView";
-        self.footReuseIdentifier = @"UICollectionReusableView";
+        
     }
     return self;
 }

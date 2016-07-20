@@ -19,8 +19,6 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) DJCollectionViewVM *collectionVM;
 
-@property (nonatomic, strong) UIView *testHeadView;
-
 @end
 
 @implementation ViewController
@@ -74,11 +72,17 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             [self testCustomNormalHeadView];
         }
             break;
+        case 8:
+        {
+            [self testCustomResuseHeadView];
+        }
+            break;
         default:
             break;
     }
 }
 
+#pragma mark - tests
 - (void)testCollection
 {
     NSArray *testDataSource = @[@{@"title":@"SimpleDemo",
@@ -95,7 +99,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
                                   @"jumpID":@(6)},
                                 @{@"title":@"CustomNormalHeadViewDemo",
                                   @"jumpID":@(7)},
-                                @{@"title":@"EditAction",
+                                @{@"title":@"CustomResuseHeadViewDemo",
                                   @"jumpID":@(8)},
                                 @{@"title":@"InsertDemo",
                                   @"jumpID":@(9)},
@@ -135,7 +139,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.minimumLineSpacing = 10.0f;
     contentSection.minimumInteritemSpacing = 10.0f;
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 100; i ++) {
+    for (NSInteger i = 0; i < 15; i ++) {
         NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
         row.itemSize = CGSizeMake(random * 20, 40);
@@ -145,6 +149,22 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         }];
         [contentSection addRow:row];
     }
+    
+    DJCollectionViewVMSection *contentBigSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentBigSection.minimumLineSpacing = 10.0f;
+    contentBigSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentBigSection];
+    for (NSInteger i = 0; i < 20; i ++) {
+        NSInteger random = arc4random() % 5;
+        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
+        row.itemSize = CGSizeMake(random * 20, random * 10);
+        row.backgroundColor = [UIColor purpleColor];
+        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap %@",rowVM.indexPath);
+        }];
+        [contentBigSection addRow:row];
+    }
+    
     [self.collectionView reloadData];
 }
 
@@ -248,22 +268,38 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     [self.collectionVM removeAllSections];
     
-    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
+    UIView *firstView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+    firstView.backgroundColor = [UIColor purpleColor];
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:firstView];
     contentSection.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
     contentSection.minimumLineSpacing = 6.0f;
-    contentSection.headerReferenceSize = self.testHeadView.frame.size;
+    contentSection.headerReferenceSize = firstView.frame.size;
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 20; i ++) {
+    for (NSInteger i = 0; i < 15; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
         row.itemSize = CGSizeMake(100, 100);
         row.backgroundColor = [UIColor blueColor];
         [contentSection addRow:row];
     }
     
+    UIView *secondView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 50)];
+    secondView.backgroundColor = [UIColor yellowColor];
+    DJCollectionViewVMSection *contentSecondSection = [DJCollectionViewVMSection sectionWithHeaderView:secondView];
+    contentSecondSection.sectionInset = UIEdgeInsetsMake(10, 0, 20, 0);
+    contentSecondSection.minimumLineSpacing = 6.0f;
+    contentSecondSection.headerReferenceSize = secondView.frame.size;
+    [self.collectionVM addSection:contentSecondSection];
+    for (NSInteger i = 0; i < 10; i ++) {
+        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
+        row.itemSize = CGSizeMake(100, 100);
+        row.backgroundColor = [UIColor redColor];
+        [contentSecondSection addRow:row];
+    }
+    
     [self.collectionView reloadData];
 }
 
-- (void)testConfigHead
+- (void)testCustomResuseHeadView
 {
     [self.collectionVM removeAllSections];
     
@@ -285,19 +321,19 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testCustomCell
 {
-    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
-    
-    [self.collectionVM removeAllSections];
-    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
-    contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
-    contentSection.minimumLineSpacing = 6.0f;
-    [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 100; i ++) {
-        DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
-        row.itemSize = CGSizeMake(100, 100);
-        [contentSection addRow:row];
-    }
-    [self.collectionView reloadData];
+//    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
+//    
+//    [self.collectionVM removeAllSections];
+//    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
+//    contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
+//    contentSection.minimumLineSpacing = 6.0f;
+//    [self.collectionVM addSection:contentSection];
+//    for (NSInteger i = 0; i < 100; i ++) {
+//        DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
+//        row.itemSize = CGSizeMake(100, 100);
+//        [contentSection addRow:row];
+//    }
+//    [self.collectionView reloadData];
 }
 
 - (void)testPrefetch
@@ -325,8 +361,6 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         [contentSection addRow:row];
     }
     [self.collectionView reloadData];
-    
-    
 }
 
 #pragma mark - getter
@@ -348,16 +382,6 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         _collectionVM = [[DJCollectionViewVM alloc] initWithCollectionView:self.collectionView];
     }
     return _collectionVM;
-}
-
-- (UIView *)testHeadView
-{
-    if (_testHeadView == nil) {
-        UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-        view.backgroundColor = [UIColor purpleColor];
-        _testHeadView = view;
-    }
-    return _testHeadView;
 }
 
 @end
