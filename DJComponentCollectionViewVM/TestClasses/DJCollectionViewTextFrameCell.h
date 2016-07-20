@@ -1,5 +1,5 @@
 //
-//  DJCollectionVMTextFrameCell.h
+//  DJCollectionViewTextFrameCell.h
 //  DJComponentCollectionViewVM
 //
 //  Created by Dokay on 16/7/20.
@@ -9,7 +9,7 @@
 #import "DJCollectionViewVMCell.h"
 #import "DJCollectionViewTitleCellRow.h"
 
-@interface DJCollectionVMTextFrameCell : DJCollectionViewVMCell
+@interface DJCollectionViewTextFrameCell : DJCollectionViewVMCell
 
 @property (nonatomic, strong) DJCollectionViewTitleCellRow *rowVM;
 

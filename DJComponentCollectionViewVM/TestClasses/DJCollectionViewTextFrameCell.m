@@ -1,20 +1,20 @@
 //
-//  DJCollectionVMTextFrameCell.m
+//  DJCollectionViewTextFrameCell.m
 //  DJComponentCollectionViewVM
 //
 //  Created by Dokay on 16/7/20.
 //  Copyright © 2016年 dj226. All rights reserved.
 //
 
-#import "DJCollectionVMTextFrameCell.h"
+#import "DJCollectionViewTextFrameCell.h"
 
-@interface DJCollectionVMTextFrameCell()
+@interface DJCollectionViewTextFrameCell()
 
 @property (nonatomic, strong) UILabel *contentLabel;
 
 @end
 
-@implementation DJCollectionVMTextFrameCell
+@implementation DJCollectionViewTextFrameCell
 @synthesize rowVM = _rowVM;
 
 - (void)cellDidLoad

@@ -8,6 +8,8 @@
 
 #import "DJCollectionViewVM.h"
 #import "DJCollectionViewVMCell.h"
+#import "DJCollectionViewVMReusableView.h"
+#import "DJCollectionViewVMReusable.h"
 #import "DJCollectionViewVM+UIScrollViewDelegate.h"
 #import "DJCollectionViewVM+UICollectionViewDelegate.h"
 #import "DJCollectionViewVM+FlowLayout.h"
@@ -52,6 +54,7 @@
         self.mutableSections   = [[NSMutableArray alloc] init];
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
+        self.registeredReusableClasses = [[NSMutableDictionary alloc] init];
         //TODO:Dokay cell init improve
         //        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
         [self.collectionView addGestureRecognizer:self.longPressGesture];
@@ -76,9 +79,8 @@
 - (void)registerDefaultClasses
 {
     self[@"DJCollectionViewVMRow"] = @"DJCollectionViewVMCell";
-    
-    [self registerForReuseHeadViewWithReuseIdentifier:kHeadReuseIdentifier];
-    [self registerForReuseFootViewWithReuseIdentifier:kFootReuseIdentifier];
+
+    [self registReusableViewClassName:NSStringFromClass([DJCollectionViewVMReusableView class]) forReusableVMClassName:kHeadReuseIdentifier];
 }
 
 - (void)registerClass:(NSString *)rowClass forCellWithReuseIdentifier:(NSString *)identifier
@@ -112,23 +114,16 @@
     return [self.registeredClasses objectForKey:row.class];
 }
 
-- (void)registerForReuseHeadViewWithReuseIdentifier:(NSString *)identifier
+- (void)registReusableViewClassName:(NSString *)reusableViewClassName forReusableVMClassName:(NSString *)reusableVMClassName
 {
+    self.registeredReusableClasses[reusableVMClassName] = reusableViewClassName;
     NSBundle *bundle = [NSBundle mainBundle];
-    if ([bundle pathForResource:identifier ofType:@"nib"]) {
-        [self.collectionView registerNib:[UINib nibWithNibName:identifier bundle:bundle] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:identifier];
+    if ([bundle pathForResource:reusableViewClassName ofType:@"nib"]) {
+        [self.collectionView registerNib:[UINib nibWithNibName:reusableViewClassName bundle:bundle] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reusableVMClassName];
+        [self.collectionView registerNib:[UINib nibWithNibName:reusableViewClassName bundle:bundle] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:reusableVMClassName];
     }else{
-        [self.collectionView registerClass:NSClassFromString(identifier) forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:identifier];
-    }
-}
-
-- (void)registerForReuseFootViewWithReuseIdentifier:(NSString *)identifier
-{
-    NSBundle *bundle = [NSBundle mainBundle];
-    if ([bundle pathForResource:identifier ofType:@"nib"]) {
-        [self.collectionView registerNib:[UINib nibWithNibName:identifier bundle:bundle] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:identifier];
-    }else{
-        [self.collectionView registerClass:NSClassFromString(identifier) forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:identifier];
+        [self.collectionView registerClass:NSClassFromString(reusableViewClassName) forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reusableVMClassName];
+        [self.collectionView registerClass:NSClassFromString(reusableViewClassName) forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:reusableVMClassName];
     }
 }
 
@@ -204,8 +199,6 @@
     
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
         DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
-        //        NSAssert(section.headReuseIdentifier.length > 0, @"section.headReuseIdentifier can not be empty");
-        
         if (section.headerView) {
             [section.headerView removeFromSuperview];
             //                [view.subviews performSelector:@selector(removeFromSuperview)];
@@ -216,21 +209,29 @@
             [view addSubview:section.headerView];
             section.headerView.frame = view.bounds;
             return view;
-        }else{
-            
         }
-        //            if ([section respondsToSelector:@selector(setConfigResuseHeadViewHandler:)]){
-        //                DJCollectionViewVMSection *headSection = (DJCollectionViewVMSection *)section;
-        //                if (headSection.configResuseHeadViewHandler) {
-        //                    headSection.configResuseHeadViewHandler(view,headSection);
-        //                }
-        //            }
+        
+        if (section.headerReusabelVM) {
+            NSString *reuseIdentifier = NSStringFromClass(section.headerReusabelVM.class);
+            UICollectionReusableView<DJCollectionViewVMReusableViewProtocol> *reusableView;
+            reusableView =[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+            
+            reusableView.sectionIndex = indexPath.section;
+            reusableView.parentCollectionView = collectionView;
+            reusableView.sectionVM = section;
+            reusableView.reusableVM = section.headerReusabelVM;
+            
+            if (!reusableView.loaded) {
+                [reusableView viewDidLoad];
+            }
+            
+            [reusableView viewWillAppear];
+            return reusableView;
+        }
         return nil;
         
     }else{
         DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.row];
-        //        NSAssert(section.footReuseIdentifier.length > 0, @"section.footReuseIdentifier can not be empty");
-        
         if (section.footerView) {
             [section.footerView removeFromSuperview];
             //                [view.subviews performSelector:@selector(removeFromSuperview)];
@@ -242,12 +243,24 @@
             section.footerView.frame = view.bounds;
             return view;
         }
-        //            if ([section respondsToSelector:@selector(setConfigResuseFootViewHandler:)]){
-        //                DJCollectionViewVMSection *headSection = (DJCollectionViewVMSection *)section;
-        //                if (headSection.configResuseFootViewHandler) {
-        //                    headSection.configResuseFootViewHandler(view,headSection);
-        //                }
-        //            }
+        if (section.footerReusableVM) {
+            NSString *reuseIdentifier = NSStringFromClass(section.footerReusableVM.class);
+            UICollectionReusableView<DJCollectionViewVMReusableViewProtocol> *reusableView;
+            reusableView =[collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+            
+            reusableView.sectionIndex = indexPath.section;
+            reusableView.parentCollectionView = collectionView;
+            reusableView.sectionVM = section;
+            reusableView.reusableVM = section.footerReusableVM;
+            
+            if (!reusableView.loaded) {
+                [reusableView viewDidLoad];
+            }
+            
+            [reusableView viewWillAppear];
+            return reusableView;
+        }
+        
         return nil;
     }
 }
@@ -408,11 +421,12 @@
 {
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
-    if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout
-        || row.heightCaculateType == DJCellHeightCaculateAutoLayout) {
+    if (row.sizeCaculateType == DJCellSizeCaculateAutoFrameLayout
+        || row.sizeCaculateType == DJCellSizeCaculateAutoLayout) {
         UICollectionViewCell<DJCollectionViewVMCellDelegate> *templateLayoutCell = [self collectionViewCellForCaculateSizeWithIndexPath:indexPath];
         [templateLayoutCell prepareForReuse];
         if (templateLayoutCell) {
+            templateLayoutCell.rowVM = row;
             if (!templateLayoutCell.loaded) {
                 [templateLayoutCell cellDidLoad];
             }
@@ -420,7 +434,7 @@
         }
         
         CGSize fittingSize = CGSizeZero;
-        if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout) {
+        if (row.sizeCaculateType == DJCellSizeCaculateAutoFrameLayout) {
             SEL selector = @selector(sizeThatFits:);
             BOOL inherited = ![templateLayoutCell isMemberOfClass:UITableViewCell.class];
             BOOL overrided = [templateLayoutCell.class instanceMethodForSelector:selector] != [UITableViewCell instanceMethodForSelector:selector];
@@ -434,9 +448,55 @@
         
         return fittingSize;
     }else{
-        NSAssert(FALSE, @"heightCaculateType is no ,please set it yes and implement cell height auto");
+        NSAssert(FALSE, @"SizeCaculateType is no ,please set it yes and implement cell Size auto");
         return CGSizeZero;
     }
+}
+
+- (CGSize)sizeWithAutoLayoutReusableViewWithSection:(NSInteger)section isHead:(BOOL)bHead
+{
+    DJCollectionViewVMSection *sectionVM = [self.mutableSections objectAtIndex:section];
+    UICollectionReusableView<DJCollectionViewVMReusableViewProtocol> *templateLayoutView;
+    
+    if (bHead) {
+        NSString *reusableViewClassName = self.registeredReusableClasses[NSStringFromClass(sectionVM.headerReusabelVM.class)];
+        NSBundle *bundle = [NSBundle mainBundle];
+        if ([bundle pathForResource:reusableViewClassName ofType:@"nib"]) {
+            templateLayoutView = [bundle loadNibNamed:reusableViewClassName owner:self options:nil][0];
+        }else{
+            templateLayoutView = [NSClassFromString(reusableViewClassName) new];
+        }
+        
+        templateLayoutView.reusableVM = sectionVM.headerReusabelVM;
+    }else if(sectionVM.footerReusableVM){
+        NSString *reusableViewClassName = self.registeredReusableClasses[NSStringFromClass(sectionVM.footerReusableVM.class)];
+        NSBundle *bundle = [NSBundle mainBundle];
+        if ([bundle pathForResource:reusableViewClassName ofType:@"nib"]) {
+            templateLayoutView = [bundle loadNibNamed:reusableViewClassName owner:self options:nil][0];
+        }else{
+            templateLayoutView = [NSClassFromString(reusableViewClassName) new];
+        }
+        templateLayoutView.reusableVM = sectionVM.footerReusableVM;
+    }
+    
+    [templateLayoutView prepareForReuse];
+    
+    if (!templateLayoutView.loaded) {
+        [templateLayoutView viewDidLoad];
+    }
+    [templateLayoutView viewWillAppear];
+    
+    CGFloat contentViewWidth = CGRectGetWidth(self.collectionView.frame);
+    CGSize fittingSize = CGSizeZero;
+    if (contentViewWidth > 0) {
+        NSLayoutConstraint *widthFenceConstraint = [NSLayoutConstraint constraintWithItem:templateLayoutView attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1.0 constant:contentViewWidth];
+        [templateLayoutView addConstraint:widthFenceConstraint];
+        // Auto layout engine does its math
+        fittingSize = [templateLayoutView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+        [templateLayoutView removeConstraint:widthFenceConstraint];
+    }
+    
+    return fittingSize;
 }
 
 #pragma mark - long tap gesture

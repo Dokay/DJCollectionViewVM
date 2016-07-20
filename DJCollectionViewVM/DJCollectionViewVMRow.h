@@ -10,10 +10,12 @@
 @import UIKit;
 @class DJCollectionViewVMSection;
 
-typedef NS_ENUM(NSInteger,DJCellHeightCaculateType){
-    DJCellHeightCaculateDefault,//default
-    DJCellHeightCaculateAutoFrameLayout,//layout use frame layout
-    DJCellHeightCaculateAutoLayout,//layout use autolayout
+#define DJDeprecated(instead) DEPRECATED_MSG_ATTRIBUTE(" Use " # instead " instead")
+
+typedef NS_ENUM(NSInteger,DJCellSizeCaculateType){
+    DJCellSizeCaculateDefault,//default
+    DJCellSizeCaculateAutoFrameLayout,//layout use frame layout
+    DJCellSizeCaculateAutoLayout,//layout use autolayout
 };
 
 @interface DJCollectionViewVMRow : NSObject
@@ -21,14 +23,15 @@ typedef NS_ENUM(NSInteger,DJCellHeightCaculateType){
 @property (nonatomic, weak) DJCollectionViewVMSection *section;
 @property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, strong) NSObject *paramObject;
-@property (nonatomic, assign) CGSize   rowSize;
+@property (nonatomic, assign) CGSize rowSize;
+@property (nonatomic, assign) CGSize itemSize DJDeprecated(rowSize);
 
 @property (nonatomic, strong) UIColor *backgroundColor;
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) UIView *selectedBackgroundView;
 
-@property (nonatomic, assign) DJCellHeightCaculateType heightCaculateType;
-@property (nonatomic, assign) BOOL dj_caculateHeightForceRefresh;
+@property (nonatomic, assign) DJCellSizeCaculateType sizeCaculateType;
+@property (nonatomic, assign) BOOL dj_caculateSizeForceRefresh;
 
 @property (nonatomic, copy) void (^selectionHandler)(id row);
 @property (nonatomic, copy) void(^prefetchHander)(id rowVM);

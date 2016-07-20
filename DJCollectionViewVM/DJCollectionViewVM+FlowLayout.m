@@ -8,6 +8,7 @@
 
 #import "DJCollectionViewVM+FlowLayout.h"
 #import "DJCollectionViewVMCell.h"
+#import "DJCollectionViewVMReusableView.h"
 
 @implementation DJCollectionViewVM (FlowLayout)
 
@@ -23,9 +24,8 @@
         }
         
         if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-            
-            if (row.rowSize.height == 0 || row.dj_caculateHeightForceRefresh) {
-                if (row.heightCaculateType == DJCellHeightCaculateDefault) {
+            if (row.rowSize.height == 0 || row.dj_caculateSizeForceRefresh) {
+                if (row.sizeCaculateType == DJCellSizeCaculateDefault) {
                     Class cellClass = [self.registeredClasses objectForKey:row.class];
                     row.rowSize = [cellClass sizeWithRow:row collectionViewVM:self];
                 }else{
@@ -101,6 +101,21 @@
         return [self.delegate collectionView:collectionView layout:collectionViewLayout referenceSizeForHeaderInSection:section];
     }else{
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:section];
+        DJCollectionViewVMReusable *reusableVM = sectionVM.headerReusabelVM;
+        if (reusableVM) {
+            if (reusableVM.resuableSize.height > 0) {
+                return reusableVM.resuableSize;
+            }
+            
+            NSString *reusableViewClass = self.registeredReusableClasses[NSStringFromClass(sectionVM.headerReusabelVM.class)];
+            if (reusableVM.sizeCaculateType == DJReusableSizeCaculateTypeDefault) {
+                reusableVM.resuableSize = [NSClassFromString(reusableViewClass) sizeWithResuableVM:sectionVM.headerReusabelVM collectionViewVM:sectionVM.collectionViewVM];
+            }else{
+                //auto size
+                reusableVM.resuableSize = [self sizeWithAutoLayoutReusableViewWithSection:section isHead:YES];
+            }
+            return sectionVM.headerReusabelVM.resuableSize;
+        }
         return sectionVM.headerReferenceSize;
         
 //        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
@@ -119,6 +134,21 @@
         return [self.delegate collectionView:collectionView layout:collectionViewLayout referenceSizeForFooterInSection:section];
     }else{
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:section];
+        DJCollectionViewVMReusable *reusableVM = sectionVM.footerReusableVM;
+        if (reusableVM) {
+            if (reusableVM.resuableSize.height > 0) {
+                return reusableVM.resuableSize;
+            }
+            
+            NSString *reusableViewClass = self.registeredReusableClasses[NSStringFromClass(sectionVM.footerReusableVM.class)];
+            if (reusableVM.sizeCaculateType == DJReusableSizeCaculateTypeDefault) {
+                reusableVM.resuableSize = [NSClassFromString(reusableViewClass) sizeWithResuableVM:sectionVM.footerReusableVM collectionViewVM:sectionVM.collectionViewVM];
+            }else{
+                //auto size
+                reusableVM.resuableSize = [self sizeWithAutoLayoutReusableViewWithSection:section isHead:NO];
+            }
+            return sectionVM.footerReusableVM.resuableSize;
+        }
         return sectionVM.footerReferenceSize;
 //        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
 //            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;

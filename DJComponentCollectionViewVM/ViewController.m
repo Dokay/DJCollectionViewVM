@@ -11,6 +11,7 @@
 #import "DJCollectionViewImageCell.h"
 #import "DJCollectionViewTitleCell.h"
 #import "DJCollectionViewLongTitleCell.h"
+#import "DJCollectionViewReusableTitleView.h"
 
 static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do";
 
@@ -77,6 +78,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             [self testCustomResuseHeadView];
         }
             break;
+        case 9:
+        {
+            [self testCustomResuseHeadViewWithNib];
+        }
+            break;
         default:
             break;
     }
@@ -87,9 +93,9 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     NSArray *testDataSource = @[@{@"title":@"SimpleDemo",
                                   @"jumpID":@(1)},
-                                @{@"title":@"AutoLayoutWithNibDemo",
+                                @{@"title":@"AutoLayoutCellWithNibDemo",
                                   @"jumpID":@(2)},
-                                @{@"title":@"AutoLayoutWithoutNibNibDemo",
+                                @{@"title":@"AutoLayoutCellWithoutNibDemo",
                                   @"jumpID":@(3)},
                                 @{@"title":@"FrameLayoutDemo",
                                   @"jumpID":@(4)},
@@ -101,10 +107,8 @@ static const NSString *kConstContent = @"There are moments in life when you miss
                                   @"jumpID":@(7)},
                                 @{@"title":@"CustomResuseHeadViewDemo",
                                   @"jumpID":@(8)},
-                                @{@"title":@"InsertDemo",
-                                  @"jumpID":@(9)},
-                                @{@"title":@"IndexTitle",
-                                  @"jumpID":@(10)},];
+                                @{@"title":@"AutoLayoutReusableWithNibDemo",
+                                  @"jumpID":@(9)},];
     
     __weak ViewController *weakSelf = self;
     
@@ -182,7 +186,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < wordsArray.count; i ++) {
         DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
         row.title = wordsArray[i];
-        row.heightCaculateType = DJCellHeightCaculateAutoLayout;
+        row.sizeCaculateType = DJCellSizeCaculateAutoLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
         }];
@@ -203,7 +207,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 100; i ++) {
         DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
         row.image = [UIImage imageNamed:@"test_head"];
-        row.heightCaculateType = DJCellHeightCaculateAutoLayout;
+        row.sizeCaculateType = DJCellSizeCaculateAutoLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
         }];
@@ -214,7 +218,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testFrameLayout
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionVMTextFrameCell";
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTextFrameCell";
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -226,7 +230,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < wordsArray.count; i ++) {
         DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
         row.title = wordsArray[i];
-        row.heightCaculateType = DJCellHeightCaculateAutoFrameLayout;
+        row.sizeCaculateType = DJCellSizeCaculateAutoFrameLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
         }];
@@ -237,7 +241,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testMoveRow
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionVMTextFrameCell";
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTextFrameCell";
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -249,7 +253,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < wordsArray.count; i ++) {
         DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
         row.title = wordsArray[i];
-        row.heightCaculateType = DJCellHeightCaculateAutoFrameLayout;
+        row.sizeCaculateType = DJCellSizeCaculateAutoFrameLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
         }];
@@ -258,6 +262,33 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         }];
         [row setMoveCellCompletionHandler:^(DJCollectionViewVMRow *rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destIndexPath) {
             
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
+
+- (void)testPrefetch
+{
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 10.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    for (NSInteger i = 0; i < 1000; i ++) {
+        NSInteger random = arc4random() % 10;
+        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
+        row.rowSize = CGSizeMake(random * 20, 40);
+        row.backgroundColor = [UIColor redColor];
+        [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
+            NSLog(@"tap %@",row.indexPath);
+        }];
+        [row setPrefetchHander:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"PrefetchHander->%ld",(long)i);
+        }];
+        [row setPrefetchCancelHander:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"PrefetchCancelHander->%ld",(long)i);
         }];
         [contentSection addRow:row];
     }
@@ -303,14 +334,22 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     [self.collectionVM removeAllSections];
     
-    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:20];
-    [contentSection setConfigResuseHeadViewHandler:^(UICollectionReusableView *view, DJCollectionViewVMSection *section) {
-        view.backgroundColor = [UIColor blueColor];
-    }];
+    [self.collectionVM registReusableViewClassName:@"DJCollectionViewReusableTitleView" forReusableVMClassName:@"DJCollectionViewReusableTitle"];
+    
+    DJCollectionViewReusableTitle *reusableHeadVM = [DJCollectionViewReusableTitle new];
+    reusableHeadVM.title = @"HeadView";
+    reusableHeadVM.resuableSize = CGSizeMake(self.view.bounds.size.width, 60);
+    
+    DJCollectionViewReusableTitle *reusableFootVM = [DJCollectionViewReusableTitle new];
+    reusableFootVM.title = @"FootView";
+    reusableFootVM.resuableSize = CGSizeMake(self.view.bounds.size.width, 40);
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:0];
+    contentSection.headerReusabelVM = reusableHeadVM;
+    contentSection.footerReusableVM = reusableFootVM;
     contentSection.minimumLineSpacing = 6.0f;
-    contentSection.headerReferenceSize = CGSizeMake(self.view.bounds.size.width, 60);
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 200; i ++) {
+    for (NSInteger i = 0; i < 150; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
         row.rowSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
@@ -319,47 +358,34 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionView reloadData];
 }
 
-- (void)testCustomCell
-{
-//    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
-//    
-//    [self.collectionVM removeAllSections];
-//    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderView:self.testHeadView];
-//    contentSection.sectionInset = UIEdgeInsetsMake(30, 0, 30, 0);
-//    contentSection.minimumLineSpacing = 6.0f;
-//    [self.collectionVM addSection:contentSection];
-//    for (NSInteger i = 0; i < 100; i ++) {
-//        DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
-//        row.itemSize = CGSizeMake(100, 100);
-//        [contentSection addRow:row];
-//    }
-//    [self.collectionView reloadData];
-}
-
-- (void)testPrefetch
+- (void)testCustomResuseHeadViewWithNib
 {
     [self.collectionVM removeAllSections];
     
-    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
-    contentSection.minimumLineSpacing = 10.0f;
-    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM registReusableViewClassName:@"DJCollectionViewReusableTitleWithNibView" forReusableVMClassName:@"DJCollectionViewReusableTitle"];
+    
+    DJCollectionViewReusableTitle *reusableHeadVM = [DJCollectionViewReusableTitle new];
+    reusableHeadVM.backgroundColor = [UIColor brownColor];
+    reusableHeadVM.title = [@"HeaderView:" stringByAppendingString:[kConstContent substringToIndex:150]];
+    reusableHeadVM.sizeCaculateType = DJReusableSizeCaculateTypeAutoLayout;
+    
+    DJCollectionViewReusableTitle *reusableFootVM = [DJCollectionViewReusableTitle new];
+    reusableFootVM.backgroundColor = [UIColor yellowColor];
+    reusableFootVM.title = [@"FooterView:" stringByAppendingString:[kConstContent substringToIndex:100]];
+    reusableFootVM.sizeCaculateType = DJReusableSizeCaculateTypeAutoLayout;
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:0];
+    contentSection.headerReusabelVM = reusableHeadVM;
+    contentSection.footerReusableVM = reusableFootVM;
+    contentSection.minimumLineSpacing = 6.0f;
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 1000; i ++) {
-        NSInteger random = arc4random() % 10;
+    for (NSInteger i = 0; i < 150; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, 40);
+        row.rowSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
-        [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
-            NSLog(@"tap %@",row.indexPath);
-        }];
-        [row setPrefetchHander:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"PrefetchHander->%ld",(long)i);
-        }];
-        [row setPrefetchCancelHander:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"PrefetchCancelHander->%ld",(long)i);
-        }];
         [contentSection addRow:row];
     }
+    
     [self.collectionView reloadData];
 }
 

@@ -9,10 +9,11 @@
 #import <Foundation/Foundation.h>
 @import UIKit;
 
-#define kHeadReuseIdentifier  @"UICollectionReusableView"
-#define kFootReuseIdentifier  @"UICollectionReusableView"
+#define kHeadReuseIdentifier  @"DJCollectionViewVMReusable"
+#define kFootReuseIdentifier  @"DJCollectionViewVMReusable"
 
 @class DJCollectionViewVM;
+@class DJCollectionViewVMReusable;
 
 @interface DJCollectionViewVMSection : NSObject
 
@@ -28,6 +29,9 @@
 
 @property (assign, readonly, nonatomic) NSUInteger index;
 @property (weak, nonatomic) DJCollectionViewVM *collectionViewVM;
+
+@property (nonatomic, strong) DJCollectionViewVMReusable *headerReusabelVM;
+@property (nonatomic, strong) DJCollectionViewVMReusable *footerReusableVM;
 
 @property (nonatomic, copy) void(^configResuseHeadViewHandler)(UICollectionReusableView *headView,DJCollectionViewVMSection *section);
 @property (nonatomic, copy) void(^configResuseFootViewHandler)(UICollectionReusableView *footView,DJCollectionViewVMSection *section);

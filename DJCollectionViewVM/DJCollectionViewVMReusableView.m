@@ -7,25 +7,34 @@
 //
 
 #import "DJCollectionViewVMReusableView.h"
+#import "DJCollectionViewVMReusable.h"
+#import "DJCollectionViewVM.h"
 
 @implementation DJCollectionViewVMReusableView
 
-- (id)initWithFrame:(CGRect)frame
++ (CGSize)sizeWithResuableVM:(DJCollectionViewVMReusable *)resuableVM collectionViewVM:(DJCollectionViewVM *)collectionViewVM
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
+    if ([resuableVM isKindOfClass:[DJCollectionViewVMReusable class]] && resuableVM.resuableSize.height > 0){
+        return resuableVM.resuableSize;
+    }else{
+        return CGSizeMake(collectionViewVM.collectionView.frame.size.width, 40);
     }
-    return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+#pragma mark - view life cycle
+- (void)viewDidLoad
 {
-    // Drawing code
+    self.loaded = YES;
 }
-*/
+
+- (void)viewWillAppear
+{
+    self.backgroundColor = self.reusableVM.backgroundColor;
+}
+
+- (void)viewDidDisappear
+{
+    //TODO:Dokay 
+}
 
 @end

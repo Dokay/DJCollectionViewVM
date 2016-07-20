@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "DJCollectionViewVMSection.h"
 #import "DJCollectionViewVMRow.h"
+#import "DJCollectionViewVMReusable.h"
+
 @import UIKit;
 
 @protocol DJCollectionViewVMDelegate <UICollectionViewDelegateFlowLayout>
@@ -24,9 +26,9 @@
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
 @protocol DJCollectionViewDataSourcePrefetching <NSObject>
-- (void)tableView:(UITableView *)tableView prefetchRowsAtIndexPaths:(NSArray *)indexPaths;
+- (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 
-- (void)tableView:(UITableView *)tableView cancelPrefetchingForRowsAtIndexPaths:(NSArray *)indexPaths;
+- (void)collectionView:(UICollectionView *)collectionView cancelPrefetchingForItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths;
 @end
 #else
 @protocol DJCollectionViewDataSourcePrefetching <UICollectionViewDataSourcePrefetching>
@@ -39,8 +41,9 @@
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, weak) id<DJCollectionViewVMDelegate> delegate;
 @property (nonatomic, weak) id<DJCollectionViewVMDataSource> dataSource;
-@property (nonatomic, strong) NSMutableDictionary *registeredClasses;
 @property (nonatomic, strong) NSArray *sections;
+@property (nonatomic, strong) NSMutableDictionary *registeredClasses;
+@property (nonatomic, strong) NSMutableDictionary *registeredReusableClasses;
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView delegate:(id<DJCollectionViewVMDelegate>)delegate;
 - (id)initWithCollectionView:(UICollectionView *)collectionView;
@@ -48,7 +51,10 @@
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
 
+- (void)registReusableViewClassName:(NSString *)reusableViewClassName forReusableVMClassName:(NSString *)reusableVMClassName;
+
 - (CGSize)sizeWithAutoLayoutCellWithIndexPath:(NSIndexPath *)indexPath;
+- (CGSize)sizeWithAutoLayoutReusableViewWithSection:(NSInteger)section isHead:(BOOL)bHead;
 
 - (void)addSection:(DJCollectionViewVMSection *)section;
 - (void)addSectionsFromArray:(NSArray *)array;
