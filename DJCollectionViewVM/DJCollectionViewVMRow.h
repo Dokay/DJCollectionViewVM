@@ -18,8 +18,8 @@ typedef NS_ENUM(NSInteger,DJCellHeightCaculateType){
 
 @interface DJCollectionViewVMRow : NSObject
 
-@property (weak, nonatomic) DJCollectionViewVMSection *section;
-@property (copy, nonatomic  ) NSString *cellIdentifier;
+@property (nonatomic, weak) DJCollectionViewVMSection *section;
+@property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, strong) NSObject *paramObject;
 @property (nonatomic, assign) CGSize   itemSize;
 
@@ -30,7 +30,7 @@ typedef NS_ENUM(NSInteger,DJCellHeightCaculateType){
 @property (nonatomic, assign) DJCellHeightCaculateType heightCaculateType;
 @property (nonatomic, assign) BOOL dj_caculateHeightForceRefresh;
 
-@property (copy, nonatomic) void (^selectionHandler)(id row);
+@property (nonatomic, copy) void (^selectionHandler)(id row);
 @property (nonatomic, copy) void(^prefetchHander)(id rowVM);
 @property (nonatomic, copy) void(^prefetchCancelHander)(id rowVM);
 

@@ -19,6 +19,7 @@
 @end
 
 @implementation DJCollectionViewImageCell
+@synthesize rowVM = _rowVM;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -43,12 +44,18 @@
      [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentImageView(50)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
 }
 
+- (void)cellWillAppear
+{
+    [super cellWillAppear];
+    
+    self.contentImageView.image = self.rowVM.image;
+}
+
 - (UIImageView *)contentImageView
 {
     if (_contentImageView == nil) {
         _contentImageView = [UIImageView new];
         _contentImageView.translatesAutoresizingMaskIntoConstraints = NO;
-        _contentImageView.image = [UIImage imageNamed:@"test_head"];
     }
     return _contentImageView;
 }

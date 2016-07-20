@@ -8,11 +8,6 @@
 
 #import "DJCollectionViewLongTitleCell.h"
 
-@implementation DJCollectionViewLongTitleCellRow
-
-@end
-
-
 @interface DJCollectionViewLongTitleCell()
 
 @property (nonatomic, weak) IBOutlet UILabel *titleLabel;

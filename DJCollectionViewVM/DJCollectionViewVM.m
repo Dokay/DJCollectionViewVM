@@ -54,7 +54,8 @@
         self.mutableSections   = [[NSMutableArray alloc] init];
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
-        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
+        //TODO:Dokay cell init improve
+//        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
         
         [self registerDefaultClasses];
     }

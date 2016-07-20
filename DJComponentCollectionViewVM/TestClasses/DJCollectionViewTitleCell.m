@@ -8,10 +8,6 @@
 
 #import "DJCollectionViewTitleCell.h"
 
-@implementation DJCollectionViewTitleCellRow
-
-@end
-
 
 @interface DJCollectionViewTitleCell()
 

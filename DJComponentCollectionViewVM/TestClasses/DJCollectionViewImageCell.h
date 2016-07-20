@@ -11,8 +11,12 @@
 
 @interface DJCollectionViewImageRow : DJCollectionViewVMRow
 
+@property (nonatomic, strong) UIImage *image;
+
 @end
 
 @interface DJCollectionViewImageCell : DJCollectionViewVMCell
+
+@property (nonatomic, strong) DJCollectionViewImageRow *rowVM;
 
 @end

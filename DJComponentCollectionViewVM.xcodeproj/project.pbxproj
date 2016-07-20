@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E076D4F1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E076D4E1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m */; };
+		4E076D521D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E076D511D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m */; };
 		4E1FB0141D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */; };
 		4E1FB0151D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0071D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.m */; };
 		4E1FB0161D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */; };
@@ -27,6 +29,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4E076D4D1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionVMTextFrameCell.h; sourceTree = "<group>"; };
+		4E076D4E1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionVMTextFrameCell.m; sourceTree = "<group>"; };
+		4E076D501D3F2180002CBC5E /* DJCollectionViewTitleCellRow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewTitleCellRow.h; sourceTree = "<group>"; };
+		4E076D511D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewTitleCellRow.m; sourceTree = "<group>"; };
 		4E1FB0041D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UICollectionViewDelegate.h"; sourceTree = "<group>"; };
 		4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DJCollectionViewVM+UICollectionViewDelegate.m"; sourceTree = "<group>"; };
 		4E1FB0061D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DJCollectionViewVM+UICollectionViewDelegateFlowLayout.h"; sourceTree = "<group>"; };
@@ -100,11 +106,15 @@
 			children = (
 				4E1FB01E1D3E691300F82119 /* DJCollectionViewImageCell.h */,
 				4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */,
+				4E076D501D3F2180002CBC5E /* DJCollectionViewTitleCellRow.h */,
+				4E076D511D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m */,
 				4E1FB0221D3E691300F82119 /* DJCollectionViewTitleCell.h */,
 				4E1FB0231D3E691300F82119 /* DJCollectionViewTitleCell.m */,
 				4E1FB0281D3E6A7600F82119 /* DJCollectionViewLongTitleCell.h */,
 				4E1FB0291D3E6A7600F82119 /* DJCollectionViewLongTitleCell.m */,
 				4E1FB02A1D3E6A7600F82119 /* DJCollectionViewLongTitleCell.xib */,
+				4E076D4D1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.h */,
+				4E076D4E1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m */,
 			);
 			path = TestClasses;
 			sourceTree = "<group>";
@@ -229,6 +239,8 @@
 				4EF326D01C881F5000478F41 /* ViewController.m in Sources */,
 				4EF326CD1C881F5000478F41 /* AppDelegate.m in Sources */,
 				4E1FB0181D3E690900F82119 /* DJCollectionViewVMCell.m in Sources */,
+				4E076D521D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m in Sources */,
+				4E076D4F1D3F20EA002CBC5E /* DJCollectionVMTextFrameCell.m in Sources */,
 				4EF326CA1C881F5000478F41 /* main.m in Sources */,
 				4E1FB0141D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m in Sources */,
 				4E1FB0191D3E690900F82119 /* DJCollectionViewVMRow.m in Sources */,

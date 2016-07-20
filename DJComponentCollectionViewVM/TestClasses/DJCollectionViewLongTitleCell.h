@@ -7,16 +7,10 @@
 //
 
 #import "DJCollectionViewVMCell.h"
-#import "DJCollectionViewVMRow.h"
-
-@interface DJCollectionViewLongTitleCellRow : DJCollectionViewVMRow
-
-@property (nonatomic, strong) NSString *title;
-
-@end
+#import "DJCollectionViewTitleCellRow.h"
 
 @interface DJCollectionViewLongTitleCell : DJCollectionViewVMCell
 
-@property (nonatomic, strong) DJCollectionViewLongTitleCellRow *rowVM;
+@property (nonatomic, strong) DJCollectionViewTitleCellRow *rowVM;
 
 @end

@@ -12,7 +12,7 @@
 #import "DJCollectionViewTitleCell.h"
 #import "DJCollectionViewLongTitleCell.h"
 
-static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do";
+static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do";
 
 @interface ViewController ()
 
@@ -52,6 +52,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
         case 3:
         {
             [self testAutoLayoutWithoutNib];
+        }
+            break;
+        case 4:
+        {
+            [self testFrameLayout];
         }
             break;
         case 6:
@@ -135,7 +140,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testAutoLayoutWithNib
 {
-    self.collectionVM[@"DJCollectionViewLongTitleCellRow"] = @"DJCollectionViewLongTitleCell";
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewLongTitleCell";
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -145,7 +150,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     
     NSArray *wordsArray = [kConstContent componentsSeparatedByString:@" "];
     for (NSInteger i = 0; i < wordsArray.count; i ++) {
-        DJCollectionViewLongTitleCellRow *row = [DJCollectionViewLongTitleCellRow new];
+        DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
         row.title = wordsArray[i];
         row.heightCaculateType = DJCellHeightCaculateAutoLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
@@ -167,6 +172,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 100; i ++) {
         DJCollectionViewImageRow *row = [DJCollectionViewImageRow new];
+        row.image = [UIImage imageNamed:@"test_head"];
         row.heightCaculateType = DJCellHeightCaculateAutoLayout;
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
@@ -175,6 +181,30 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     }
     [self.collectionView reloadData];
 }
+
+- (void)testFrameLayout
+{
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionVMTextFrameCell";
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 5.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    
+    NSArray *wordsArray = [kConstContent componentsSeparatedByString:@" "];
+    for (NSInteger i = 0; i < wordsArray.count; i ++) {
+        DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
+        row.title = wordsArray[i];
+        row.heightCaculateType = DJCellHeightCaculateAutoFrameLayout;
+        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap %@",rowVM.indexPath);
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
+
 
 - (void)testHead
 {
