@@ -169,7 +169,16 @@
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: targetIndexPathForMoveFromItemAtIndexPath: toProposedIndexPath:)]){
         return [self.delegate collectionView:collectionView targetIndexPathForMoveFromItemAtIndexPath:originalIndexPath toProposedIndexPath:proposedIndexPath];
     }
-    return nil;
+    DJCollectionViewVMSection *sourceSection = [self.sections objectAtIndex:originalIndexPath.section];
+    DJCollectionViewVMRow *rowVM = [sourceSection.rows objectAtIndex:originalIndexPath.row];
+    if (rowVM.moveCellHandler) {
+        BOOL allowed = rowVM.moveCellHandler(rowVM, originalIndexPath, proposedIndexPath);
+        if (!allowed){
+            return originalIndexPath;
+        }
+    }
+    
+    return proposedIndexPath;
 }
 
 - (CGPoint)collectionView:(UICollectionView *)collectionView targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset NS_AVAILABLE_IOS(9_0) // customize the content offset to be applied during transition or update animations
@@ -177,7 +186,7 @@
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: targetContentOffsetForProposedContentOffset:)]){
         return [self.delegate collectionView:collectionView targetContentOffsetForProposedContentOffset:proposedContentOffset];
     }
-    return CGPointZero;
+    return proposedContentOffset;
 }
 
 

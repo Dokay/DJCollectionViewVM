@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSMutableDictionary *registeredCaculateSizeCells;
 @property (nonatomic, strong) NSMutableArray *mutableSections;
 @property (nonatomic, strong) DJPrefetchManager *prefetchManager;
+@property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
 
 @end
 
@@ -26,19 +27,16 @@
 
 - (id)init
 {
-    NSAssert(NO, @"换个别的吧");
+    NSAssert(NO, @"please use other init methods instead");
     return nil;
 }
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView delegate:(id<DJCollectionViewVMDelegate>)delegate
 {
     self = [self initWithCollectionView:collectionView];
-    if (!self)
-        return nil;
-    
-    self.delegate = delegate;
-    self.dataSource = (id<DJCollectionViewVMDataSource>)delegate;
-    
+    if (self){
+        
+    }
     return self;
 }
 
@@ -55,8 +53,8 @@
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
         //TODO:Dokay cell init improve
-//        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
-        
+        //        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
+        [self.collectionView addGestureRecognizer:self.longPressGesture];
         [self registerDefaultClasses];
     }
     
@@ -240,20 +238,27 @@
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canMoveItemAtIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(9_0)
 {
-    if ([self.dataSource conformsToProtocol:@protocol(DJCollectionViewVMDataSource)] && [self.dataSource respondsToSelector:@selector(collectionView: canMoveItemAtIndexPath:)]) {
-        return [self.dataSource collectionView:collectionView canMoveItemAtIndexPath:indexPath];
+    if (self.mutableSections.count <= indexPath.section) {
+        return NO;
     }
-    return NO;
+    DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *rowVM = [section.rows objectAtIndex:indexPath.row];
+    return rowVM.moveCellHandler != nil && rowVM.moveCellHandler(rowVM,indexPath,nil);
 }
 
 - (void)collectionView:(UICollectionView *)collectionView moveItemAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath*)destinationIndexPath NS_AVAILABLE_IOS(9_0)
 {
-    if ([self.dataSource conformsToProtocol:@protocol(DJCollectionViewVMDataSource)] && [self.dataSource respondsToSelector:@selector(collectionView: moveItemAtIndexPath: toIndexPath:)]) {
-        return [self.dataSource collectionView:collectionView moveItemAtIndexPath:sourceIndexPath toIndexPath:destinationIndexPath];
-    }else{
-        //TODO:Dokay
-        //change indexpath and reload data
+    DJCollectionViewVMSection *sourceSection = [self.mutableSections objectAtIndex:sourceIndexPath.section];
+    DJCollectionViewVMRow *rowVM = [sourceSection.rows objectAtIndex:sourceIndexPath.row];
+    [sourceSection removeRowAtIndex:sourceIndexPath.row];
+    
+    DJCollectionViewVMSection *destinationSection = [self.mutableSections objectAtIndex:destinationIndexPath.section];
+    [destinationSection insertRow:rowVM atIndex:destinationIndexPath.row];
+    
+    if (rowVM.moveCellCompletionHandler){
+        rowVM.moveCellCompletionHandler(rowVM, sourceIndexPath, destinationIndexPath);
     }
+    [collectionView reloadData];
 }
 
 #pragma mark - DJTableViewDataSourcePrefetching
@@ -396,11 +401,7 @@
     if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout
         || row.heightCaculateType == DJCellHeightCaculateAutoLayout) {
         UICollectionViewCell<DJCollectionViewVMCellDelegate> *templateLayoutCell = [self collectionViewCellForCaculateSizeWithIndexPath:indexPath];
-        
-        // Manually calls to ensure consistent behavior with actual cells (that are displayed on screen).
         [templateLayoutCell prepareForReuse];
-        
-        // Customize and provide content for our template cell.
         if (templateLayoutCell) {
             if (!templateLayoutCell.loaded) {
                 [templateLayoutCell cellDidLoad];
@@ -408,15 +409,8 @@
             [templateLayoutCell cellWillAppear];
         }
         
-//        [templateLayoutCell setNeedsLayout];
-//        [templateLayoutCell layoutIfNeeded];
-        
         CGSize fittingSize = CGSizeZero;
-        
         if (row.heightCaculateType == DJCellHeightCaculateAutoFrameLayout) {
-            // If not using auto layout, you have to override "-sizeThatFits:" to provide a fitting size by yourself.
-            // This is the same method used in iOS8 self-sizing cell's implementation.
-            // Note: fitting height should not include separator view.
             SEL selector = @selector(sizeThatFits:);
             BOOL inherited = ![templateLayoutCell isMemberOfClass:UITableViewCell.class];
             BOOL overrided = [templateLayoutCell.class instanceMethodForSelector:selector] != [UITableViewCell instanceMethodForSelector:selector];
@@ -425,7 +419,6 @@
             }
             fittingSize = [templateLayoutCell sizeThatFits:CGSizeMake(0, 0)];
         } else {
-            // Auto layout engine does its math
             fittingSize = [templateLayoutCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
         }
         
@@ -433,6 +426,39 @@
     }else{
         NSAssert(FALSE, @"heightCaculateType is no ,please set it yes and implement cell height auto");
         return CGSizeZero;
+    }
+}
+
+#pragma mark - long tap gesture
+- (void)handleLongGesture:(UILongPressGestureRecognizer *)gesture
+{
+    switch(gesture.state) {
+        case UIGestureRecognizerStateBegan:
+        {
+            CGPoint point = [gesture locationInView:self.collectionView];
+            NSIndexPath *selectedIndexPath = [self.collectionView indexPathForItemAtPoint:point];
+            if (selectedIndexPath == nil) {
+                return;
+            }
+            [self.collectionView beginInteractiveMovementForItemAtIndexPath:selectedIndexPath];
+        }
+            break;
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint point = [gesture locationInView:self.collectionView];
+            [self.collectionView updateInteractiveMovementTargetPosition:point];
+        }
+            break;
+        case UIGestureRecognizerStateEnded:
+        {
+            [self.collectionView endInteractiveMovement];
+        }
+            break;
+        default:
+        {
+            [self.collectionView cancelInteractiveMovement];
+        }
+            break;
     }
 }
 
@@ -461,6 +487,14 @@
         }];
     }
     return _prefetchManager;
+}
+
+- (UILongPressGestureRecognizer *)longPressGesture
+{
+    if (_longPressGesture == nil) {
+        _longPressGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(handleLongGesture:)];
+    }
+    return _longPressGesture;
 }
 
 @end

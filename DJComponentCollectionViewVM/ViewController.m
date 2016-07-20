@@ -59,6 +59,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             [self testFrameLayout];
         }
             break;
+        case 5:
+        {
+            [self testMoveRow];
+        }
+            break;
         case 6:
         {
             [self testPrefetch];
@@ -205,6 +210,34 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionView reloadData];
 }
 
+- (void)testMoveRow
+{
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionVMTextFrameCell";
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 5.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    
+    NSArray *wordsArray = [kConstContent componentsSeparatedByString:@" "];
+    for (NSInteger i = 0; i < wordsArray.count; i ++) {
+        DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
+        row.title = wordsArray[i];
+        row.heightCaculateType = DJCellHeightCaculateAutoFrameLayout;
+        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap %@",rowVM.indexPath);
+        }];
+        [row setMoveCellHandler:^BOOL(DJCollectionViewVMRow *rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destIndexPath) {
+            return YES;
+        }];
+        [row setMoveCellCompletionHandler:^(DJCollectionViewVMRow *rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destIndexPath) {
+            
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
 
 - (void)testHead
 {
