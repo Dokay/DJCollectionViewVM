@@ -19,26 +19,21 @@
     }else{
         DJCollectionViewVMSection *section = [self.sections objectAtIndex:indexPath.section];
         DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
-        if (row.rowSize.height > 0) {
-            return row.rowSize;
+        if (row.itemSize.height > 0) {
+            return row.itemSize;
         }
         
         if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-            if (row.rowSize.height == 0 || row.dj_caculateSizeForceRefresh) {
+            if (row.itemSize.height == 0 || row.dj_caculateSizeForceRefresh) {
                 if (row.sizeCaculateType == DJCellSizeCaculateDefault) {
-                    Class cellClass = [self.registeredClasses objectForKey:row.class];
-                    row.rowSize = [cellClass sizeWithRow:row collectionViewVM:self];
+                    Class cellClass = [self objectAtKeyedSubscript:(id<NSCopying>)row.class];
+                    row.itemSize = [cellClass sizeWithRow:row collectionViewVM:self];
                 }else{
                     //auto size
-                    row.rowSize = [self sizeWithAutoLayoutCellWithIndexPath:indexPath];
+                    row.itemSize = [self sizeWithAutoLayoutCellWithIndexPath:indexPath];
                 }
             }
-            return row.rowSize;
-            
-//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-//            if (flowFayout.itemSize.width != 0 && flowFayout.itemSize.height != 0) {
-//                return flowFayout.itemSize;
-//            }
+            return row.itemSize;
         }
     }
     return CGSizeZero;
@@ -49,12 +44,6 @@
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegateFlowLayout)] && [self.delegate respondsToSelector:@selector(collectionView: layout: insetForSectionAtIndex:)]){
         return [self.delegate collectionView:collectionView layout:collectionViewLayout insetForSectionAtIndex:section];
     }else{
-//        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-//            if (flowFayout.sectionInset.top != 0  || flowFayout.sectionInset.bottom != 0) {
-//                return flowFayout.sectionInset;
-//            }
-//        }
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:section];
         return sectionVM.sectionInset;
     }
@@ -68,12 +57,6 @@
     }else{
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:section];
         return sectionVM.minimumLineSpacing;
-//        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-//            if (flowFayout.minimumLineSpacing != 0) {
-//                return flowFayout.minimumLineSpacing;
-//            }
-//        }
     }
     return 0;
 }
@@ -85,12 +68,6 @@
     }else{
         DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:section];
         return sectionVM.minimumInteritemSpacing;
-//        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-//            if (flowFayout.minimumInteritemSpacing != 0) {
-//                return flowFayout.minimumInteritemSpacing;
-//            }
-//        }
     }
     return 0;
 }
@@ -107,7 +84,7 @@
                 return reusableVM.resuableSize;
             }
             
-            NSString *reusableViewClass = self.registeredReusableClasses[NSStringFromClass(sectionVM.headerReusabelVM.class)];
+            NSString *reusableViewClass = [self reusableClassNameForViewModelClassName:NSStringFromClass(sectionVM.headerReusabelVM.class)];
             if (reusableVM.sizeCaculateType == DJReusableSizeCaculateTypeDefault) {
                 reusableVM.resuableSize = [NSClassFromString(reusableViewClass) sizeWithResuableVM:sectionVM.headerReusabelVM collectionViewVM:sectionVM.collectionViewVM];
             }else{
@@ -117,13 +94,6 @@
             return sectionVM.headerReusabelVM.resuableSize;
         }
         return sectionVM.headerReferenceSize;
-        
-//        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-//            if (flowFayout.headerReferenceSize.height != 0) {
-//                return flowFayout.headerReferenceSize;
-//            }
-//        }
     }
     return CGSizeZero;
 }
@@ -140,7 +110,7 @@
                 return reusableVM.resuableSize;
             }
             
-            NSString *reusableViewClass = self.registeredReusableClasses[NSStringFromClass(sectionVM.footerReusableVM.class)];
+            NSString *reusableViewClass = [self reusableClassNameForViewModelClassName:NSStringFromClass(sectionVM.headerReusabelVM.class)];
             if (reusableVM.sizeCaculateType == DJReusableSizeCaculateTypeDefault) {
                 reusableVM.resuableSize = [NSClassFromString(reusableViewClass) sizeWithResuableVM:sectionVM.footerReusableVM collectionViewVM:sectionVM.collectionViewVM];
             }else{
@@ -150,12 +120,6 @@
             return sectionVM.footerReusableVM.resuableSize;
         }
         return sectionVM.footerReferenceSize;
-//        if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
-//            UICollectionViewFlowLayout *flowFayout = (UICollectionViewFlowLayout *)collectionViewLayout;
-//            if (flowFayout.footerReferenceSize.height >= 0) {
-//                return flowFayout.footerReferenceSize;
-//            }
-//        }
     }
     return CGSizeZero;
 }

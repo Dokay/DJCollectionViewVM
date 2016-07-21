@@ -17,7 +17,9 @@
 
 @interface DJCollectionViewVM()<DJCollectionViewDataSourcePrefetching>
 
+@property (nonatomic, strong) NSMutableDictionary *registeredClasses;
 @property (nonatomic, strong) NSMutableDictionary *registeredXIBs;
+@property (nonatomic, strong) NSMutableDictionary *registeredReusableClasses;
 @property (nonatomic, strong) NSMutableDictionary *registeredCaculateSizeCells;
 @property (nonatomic, strong) NSMutableArray *mutableSections;
 @property (nonatomic, strong) DJPrefetchManager *prefetchManager;
@@ -112,6 +114,13 @@
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     NSObject *row = [section.rows objectAtIndex:indexPath.row];
     return [self.registeredClasses objectForKey:row.class];
+}
+
+- (NSString *)reusableClassNameForViewModelClassName:(NSString *)className
+{
+    NSString *reusableClassName = [self.registeredReusableClasses objectForKey:className];
+    NSAssert(reusableClassName.length > 0, @"there is not a reusableClass for %@,please rember to resit it.",className);
+    return reusableClassName;
 }
 
 - (void)registReusableViewClassName:(NSString *)reusableViewClassName forReusableVMClassName:(NSString *)reusableVMClassName
@@ -290,7 +299,7 @@
     [collectionView reloadData];
 }
 
-#pragma mark - DJTableViewDataSourcePrefetching
+#pragma mark - DJCollectionViewDataSourcePrefetching
 - (void)collectionView:(UICollectionView *)collectionView prefetchItemsAtIndexPaths:(NSArray<NSIndexPath *> *)indexPaths
 {
     for (NSIndexPath *indexPath in indexPaths) {

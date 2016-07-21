@@ -36,20 +36,19 @@
 @end
 #endif
 
-@interface DJCollectionViewVM : NSObject<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout>
+@interface DJCollectionViewVM : NSObject<UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UICollectionViewDelegate>
 
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, weak) id<DJCollectionViewVMDelegate> delegate;
 @property (nonatomic, weak) id<DJCollectionViewVMDataSource> dataSource;
 @property (nonatomic, strong) NSArray *sections;
-@property (nonatomic, strong) NSMutableDictionary *registeredClasses;
-@property (nonatomic, strong) NSMutableDictionary *registeredReusableClasses;
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView delegate:(id<DJCollectionViewVMDelegate>)delegate;
 - (id)initWithCollectionView:(UICollectionView *)collectionView;
 
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
+- (NSString *)reusableClassNameForViewModelClassName:(NSString *)className;
 
 - (void)registReusableViewClassName:(NSString *)reusableViewClassName forReusableVMClassName:(NSString *)reusableVMClassName;
 

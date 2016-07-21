@@ -13,7 +13,7 @@
 #import "DJCollectionViewLongTitleCell.h"
 #import "DJCollectionViewReusableTitleView.h"
 
-static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do";
+static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.\n May you have enough happiness to make you sweet,enough trials to make you strong,enough sorrow to keep you human,enough hope to make you happy? Always put yourself in others’shoes.If you feel that it hurts you,it probably hurts the other person, too. \nThe happiest of people don’t necessarily have the best of everything;they just make the most of everything that comes along their way.Happiness lies for those who cry,those who hurt, those who have searched,and those who have tried,for only they can appreciate the importance of people. \n who have touched their lives.Love begins with a smile,grows with a kiss and ends with a tear.The brightest future will always be based on a forgotten past, you can’t go on well in lifeuntil you let go of your past failures and heartaches.\n When you were born,you were crying and everyone around you was smiling.Live your life so that when you die,you're the one who is smiling and everyone around you is crying.\n Please send this message to those people who mean something to you,to those who have touched your life in one way or another,to those who make you smile when you really need it,to those that make you see the brighter side of things when you are really down,to those who you want to let them know that you appreciate their friendship.And if you don’t, don’t worry,nothing bad will happen to you,you will just miss out on the opportunity to brighten someone’s day with this message.";
 
 @interface ViewController ()
 
@@ -146,7 +146,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 15; i ++) {
         NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, 40);
+        row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
@@ -161,7 +161,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 20; i ++) {
         NSInteger random = arc4random() % 5;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, random * 10);
+        row.itemSize = CGSizeMake(random * 20, random * 10);
         row.backgroundColor = [UIColor purpleColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
@@ -279,7 +279,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 1000; i ++) {
         NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, 40);
+        row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
             NSLog(@"tap %@",row.indexPath);
@@ -308,7 +308,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 15; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(100, 100);
+        row.itemSize = CGSizeMake(100, 100);
         row.backgroundColor = [UIColor blueColor];
         [contentSection addRow:row];
     }
@@ -322,7 +322,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionVM addSection:contentSecondSection];
     for (NSInteger i = 0; i < 10; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(100, 100);
+        row.itemSize = CGSizeMake(100, 100);
         row.backgroundColor = [UIColor redColor];
         [contentSecondSection addRow:row];
     }
@@ -348,10 +348,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.headerReusabelVM = reusableHeadVM;
     contentSection.footerReusableVM = reusableFootVM;
     contentSection.minimumLineSpacing = 6.0f;
+    contentSection.minimumInteritemSpacing = 6.0f;
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 150; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(40, 40);
+        row.itemSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
         [contentSection addRow:row];
     }
@@ -378,10 +379,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.headerReusabelVM = reusableHeadVM;
     contentSection.footerReusableVM = reusableFootVM;
     contentSection.minimumLineSpacing = 6.0f;
+    contentSection.minimumInteritemSpacing = 6.0f;
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 150; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(40, 40);
+        row.itemSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
         [contentSection addRow:row];
     }
@@ -390,7 +392,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 }
 
 #pragma mark - getter
-- (UICollectionView  *)collectionView
+- (UICollectionView *)collectionView
 {
     if (_collectionView == nil) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];

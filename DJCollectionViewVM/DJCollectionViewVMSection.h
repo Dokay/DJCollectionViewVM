@@ -17,24 +17,65 @@
 
 @interface DJCollectionViewVMSection : NSObject
 
+/**
+ *  array for row's ViewModel
+ */
 @property (strong, readonly, nonatomic) NSArray *rows;
+
+/**
+ *  Normal UIView ,simulation for headerView in UITableView.
+ */
 @property (strong, nonatomic) UIView *headerView;
+
+/**
+ *  Normal UIView ,simulation for footerView in UITableView
+ */
 @property (strong, nonatomic) UIView *footerView;
 
+/**
+ *  property same as sectionInset in UICollectionViewFlowLayout.
+ */
 @property (nonatomic, assign) UIEdgeInsets sectionInset;
+
+/**
+ *  property same as minimumLineSpacing in UICollectionViewFlowLayout.
+ */
 @property (nonatomic, assign) CGFloat minimumLineSpacing;
+
+/**
+ *  property same as minimumInteritemSpacing in UICollectionViewFlowLayout.
+ */
 @property (nonatomic, assign) CGFloat minimumInteritemSpacing;
+
+/**
+ *  property same as headerReferenceSize in UICollectionViewFlowLayout.
+ */
 @property (nonatomic, assign) CGSize headerReferenceSize;
+
+/**
+ *  property same as footerReferenceSize in UICollectionViewFlowLayout.
+ */
 @property (nonatomic, assign) CGSize footerReferenceSize;
 
+/**
+ *  current section index in UICollectionView.
+ */
 @property (assign, readonly, nonatomic) NSUInteger index;
+
+/**
+ *  ViewModel of  UICollectionView.
+ */
 @property (weak, nonatomic) DJCollectionViewVM *collectionViewVM;
 
+/**
+ *  ViewModel of SupplementaryView in Header.
+ */
 @property (nonatomic, strong) DJCollectionViewVMReusable *headerReusabelVM;
-@property (nonatomic, strong) DJCollectionViewVMReusable *footerReusableVM;
 
-@property (nonatomic, copy) void(^configResuseHeadViewHandler)(UICollectionReusableView *headView,DJCollectionViewVMSection *section);
-@property (nonatomic, copy) void(^configResuseFootViewHandler)(UICollectionReusableView *footView,DJCollectionViewVMSection *section);
+/**
+ *  ViewModel of SupplementaryView in Footer.
+ */
+@property (nonatomic, strong) DJCollectionViewVMReusable *footerReusableVM;
 
 + (instancetype)sectionWithHeaderView:(UIView *)headerView;
 + (instancetype)sectionWithHeaderView:(UIView *)headerView footerView:(UIView *)footerView;
