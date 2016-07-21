@@ -17,6 +17,13 @@
 @implementation DJCollectionViewLongTitleCell
 @synthesize rowVM = _rowVM;
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    //preferredMaxLayoutWidth may be changed for caculate height
+    self.titleLabel.preferredMaxLayoutWidth = 0.0f;
+}
+
 - (void)cellDidLoad
 {
     [super cellDidLoad];

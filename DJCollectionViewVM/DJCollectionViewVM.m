@@ -55,8 +55,8 @@
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
         self.registeredReusableClasses = [[NSMutableDictionary alloc] init];
-        //TODO:Dokay cell init improve
-        //        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
+    
+        self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
         [self.collectionView addGestureRecognizer:self.longPressGesture];
         [self registerDefaultClasses];
     }
@@ -426,7 +426,6 @@
         UICollectionViewCell<DJCollectionViewVMCellDelegate> *templateLayoutCell = [self collectionViewCellForCaculateSizeWithIndexPath:indexPath];
         [templateLayoutCell prepareForReuse];
         if (templateLayoutCell) {
-            templateLayoutCell.rowVM = row;
             if (!templateLayoutCell.loaded) {
                 [templateLayoutCell cellDidLoad];
             }
@@ -445,7 +444,6 @@
         } else {
             fittingSize = [templateLayoutCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
         }
-        
         return fittingSize;
     }else{
         NSAssert(FALSE, @"SizeCaculateType is no ,please set it yes and implement cell Size auto");
