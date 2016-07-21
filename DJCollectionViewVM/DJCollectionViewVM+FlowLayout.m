@@ -26,7 +26,7 @@
         if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
             if (row.itemSize.height == 0 || row.dj_caculateSizeForceRefresh) {
                 if (row.sizeCaculateType == DJCellSizeCaculateDefault) {
-                    Class cellClass = [self.registeredClasses objectForKey:row.class];
+                    Class cellClass = [self objectAtKeyedSubscript:(id<NSCopying>)row.class];
                     row.itemSize = [cellClass sizeWithRow:row collectionViewVM:self];
                 }else{
                     //auto size
@@ -84,7 +84,7 @@
                 return reusableVM.resuableSize;
             }
             
-            NSString *reusableViewClass = self.registeredReusableClasses[NSStringFromClass(sectionVM.headerReusabelVM.class)];
+            NSString *reusableViewClass = [self reusableClassNameForViewModelClassName:NSStringFromClass(sectionVM.headerReusabelVM.class)];
             if (reusableVM.sizeCaculateType == DJReusableSizeCaculateTypeDefault) {
                 reusableVM.resuableSize = [NSClassFromString(reusableViewClass) sizeWithResuableVM:sectionVM.headerReusabelVM collectionViewVM:sectionVM.collectionViewVM];
             }else{
@@ -110,7 +110,7 @@
                 return reusableVM.resuableSize;
             }
             
-            NSString *reusableViewClass = self.registeredReusableClasses[NSStringFromClass(sectionVM.footerReusableVM.class)];
+            NSString *reusableViewClass = [self reusableClassNameForViewModelClassName:NSStringFromClass(sectionVM.headerReusabelVM.class)];
             if (reusableVM.sizeCaculateType == DJReusableSizeCaculateTypeDefault) {
                 reusableVM.resuableSize = [NSClassFromString(reusableViewClass) sizeWithResuableVM:sectionVM.footerReusableVM collectionViewVM:sectionVM.collectionViewVM];
             }else{

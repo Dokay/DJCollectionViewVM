@@ -81,9 +81,13 @@
     self = [self init];
     if (self){
         self.headerView = headerView;
-//        self.headerView.translatesAutoresizingMaskIntoConstraints = YES;
         self.footerView = footerView;
-//        self.footerView.translatesAutoresizingMaskIntoConstraints = YES;
+        if (headerView) {
+            self.headerReferenceSize = headerView.bounds.size;
+        }
+        if (footerView) {
+            self.footerReferenceSize = footerView.bounds.size;
+        }
         _mutableRows = [[NSMutableArray alloc] init];
     }
     return self;

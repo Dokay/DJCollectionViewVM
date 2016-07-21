@@ -41,8 +41,8 @@
 - (void)setupUI
 {
     [self.contentView addSubview:self.contentImageView];
-    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentImageView(50)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
-     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentImageView(50)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
+    [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:|[_contentImageView(80)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
+     [self.contentView addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:|[_contentImageView(80)]|" options:0 metrics:nil views:NSDictionaryOfVariableBindings(_contentImageView)]];
 }
 
 - (void)cellWillAppear

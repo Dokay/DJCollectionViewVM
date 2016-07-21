@@ -122,12 +122,12 @@
 		4E1FB01D1D3E691300F82119 /* TestClasses */ = {
 			isa = PBXGroup;
 			children = (
-				4E1FB01E1D3E691300F82119 /* DJCollectionViewImageCell.h */,
-				4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */,
 				4E076D501D3F2180002CBC5E /* DJCollectionViewTitleCellRow.h */,
 				4E076D511D3F2180002CBC5E /* DJCollectionViewTitleCellRow.m */,
 				4E1FB0221D3E691300F82119 /* DJCollectionViewTitleCell.h */,
 				4E1FB0231D3E691300F82119 /* DJCollectionViewTitleCell.m */,
+				4E1FB01E1D3E691300F82119 /* DJCollectionViewImageCell.h */,
+				4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */,
 				4E1FB0281D3E6A7600F82119 /* DJCollectionViewLongTitleCell.h */,
 				4E1FB0291D3E6A7600F82119 /* DJCollectionViewLongTitleCell.m */,
 				4E1FB02A1D3E6A7600F82119 /* DJCollectionViewLongTitleCell.xib */,

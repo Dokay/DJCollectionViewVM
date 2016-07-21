@@ -20,18 +20,54 @@ typedef NS_ENUM(NSInteger,DJCellSizeCaculateType){
 
 @interface DJCollectionViewVMRow : NSObject
 
+/**
+ *  section ViewModel that current row belong to.
+ */
 @property (nonatomic, weak) DJCollectionViewVMSection *section;
+
+/**
+ *  cell reuse identifier.
+ */
 @property (nonatomic, copy) NSString *cellIdentifier;
+
+/**
+ *  param object for custom tmp data cache.
+ */
 @property (nonatomic, strong) NSObject *paramObject;
+
+/**
+ *  size of UICollectionViewCell be mapped.
+ */
 @property (nonatomic, assign) CGSize itemSize;
 
+/**
+ *  backgroundColor of UICollectionViewCell be mapped.
+ */
 @property (nonatomic, strong) UIColor *backgroundColor;
+
+/**
+ *  backgroundView of UICollectionViewCell be mapped.
+ */
 @property (nonatomic, strong) UIView *backgroundView;
+
+/**
+ *  selectedBackgroundView of UICollectionViewCell be mapped.
+ */
 @property (nonatomic, strong) UIView *selectedBackgroundView;
 
+/**
+ *  SizeCaculateType for current UICollectionViewCell.
+ */
 @property (nonatomic, assign) DJCellSizeCaculateType sizeCaculateType;
+
+/**
+ *  whether or not caculate size every time when the cell appears.
+ */
 @property (nonatomic, assign) BOOL dj_caculateSizeForceRefresh;
 
+/**
+ *  response to select cell.
+ */
 @property (nonatomic, copy) void (^selectionHandler)(id row);
 @property (nonatomic, copy) void(^prefetchHander)(id rowVM);
 @property (nonatomic, copy) void(^prefetchCancelHander)(id rowVM);
