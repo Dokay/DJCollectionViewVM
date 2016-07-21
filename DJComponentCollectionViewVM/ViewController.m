@@ -146,7 +146,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 15; i ++) {
         NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, 40);
+        row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
@@ -161,7 +161,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 20; i ++) {
         NSInteger random = arc4random() % 5;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, random * 10);
+        row.itemSize = CGSizeMake(random * 20, random * 10);
         row.backgroundColor = [UIColor purpleColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
@@ -279,7 +279,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     for (NSInteger i = 0; i < 1000; i ++) {
         NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(random * 20, 40);
+        row.itemSize = CGSizeMake(random * 20, 40);
         row.backgroundColor = [UIColor redColor];
         [row setSelectionHandler:^(DJCollectionViewVMRow *row) {
             NSLog(@"tap %@",row.indexPath);
@@ -308,7 +308,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 15; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(100, 100);
+        row.itemSize = CGSizeMake(100, 100);
         row.backgroundColor = [UIColor blueColor];
         [contentSection addRow:row];
     }
@@ -322,7 +322,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     [self.collectionVM addSection:contentSecondSection];
     for (NSInteger i = 0; i < 10; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(100, 100);
+        row.itemSize = CGSizeMake(100, 100);
         row.backgroundColor = [UIColor redColor];
         [contentSecondSection addRow:row];
     }
@@ -348,10 +348,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.headerReusabelVM = reusableHeadVM;
     contentSection.footerReusableVM = reusableFootVM;
     contentSection.minimumLineSpacing = 6.0f;
+    contentSection.minimumInteritemSpacing = 6.0f;
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 150; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(40, 40);
+        row.itemSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
         [contentSection addRow:row];
     }
@@ -378,10 +379,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.headerReusabelVM = reusableHeadVM;
     contentSection.footerReusableVM = reusableFootVM;
     contentSection.minimumLineSpacing = 6.0f;
+    contentSection.minimumInteritemSpacing = 6.0f;
     [self.collectionVM addSection:contentSection];
     for (NSInteger i = 0; i < 150; i ++) {
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.rowSize = CGSizeMake(40, 40);
+        row.itemSize = CGSizeMake(40, 40);
         row.backgroundColor = [UIColor redColor];
         [contentSection addRow:row];
     }
@@ -390,7 +392,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 }
 
 #pragma mark - getter
-- (UICollectionView  *)collectionView
+- (UICollectionView *)collectionView
 {
     if (_collectionView == nil) {
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];

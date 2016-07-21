@@ -23,8 +23,7 @@ typedef NS_ENUM(NSInteger,DJCellSizeCaculateType){
 @property (nonatomic, weak) DJCollectionViewVMSection *section;
 @property (nonatomic, copy) NSString *cellIdentifier;
 @property (nonatomic, strong) NSObject *paramObject;
-@property (nonatomic, assign) CGSize rowSize;
-@property (nonatomic, assign) CGSize itemSize DJDeprecated(rowSize);
+@property (nonatomic, assign) CGSize itemSize;
 
 @property (nonatomic, strong) UIColor *backgroundColor;
 @property (nonatomic, strong) UIView *backgroundView;
@@ -37,8 +36,8 @@ typedef NS_ENUM(NSInteger,DJCellSizeCaculateType){
 @property (nonatomic, copy) void(^prefetchHander)(id rowVM);
 @property (nonatomic, copy) void(^prefetchCancelHander)(id rowVM);
 
-@property (nonatomic, copy) BOOL (^moveCellHandler)(id rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath);
-@property (nonatomic, copy) void (^moveCellCompletionHandler)(id rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath);
+@property (nonatomic, copy) BOOL (^moveCellHandler)(id rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath) NS_AVAILABLE_IOS(9_0);
+@property (nonatomic, copy) void (^moveCellCompletionHandler)(id rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath) NS_AVAILABLE_IOS(9_0);
 
 + (instancetype)row;
 

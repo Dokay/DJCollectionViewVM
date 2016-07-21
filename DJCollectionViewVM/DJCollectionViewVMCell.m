@@ -22,8 +22,8 @@
 
 + (CGSize)sizeWithRow:(DJCollectionViewVMRow *)row collectionViewVM:(DJCollectionViewVM *)collectionViewVM
 {
-    if ([row isKindOfClass:[DJCollectionViewVMRow class]] && row.rowSize.width > 0){
-        return row.rowSize;
+    if ([row isKindOfClass:[DJCollectionViewVMRow class]] && row.itemSize.width > 0){
+        return row.itemSize;
     }else{
         return CGSizeMake(100, 100);
     }

@@ -7,6 +7,7 @@
 //
 
 #import "DJCollectionViewVM+UICollectionViewDelegate.h"
+#import "DJCollectionViewVMCell.h"
 
 @implementation DJCollectionViewVM (UICollectionViewDelegate)
 
@@ -89,6 +90,10 @@
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: didEndDisplayingCell: forItemAtIndexPath:)]){
         [self.delegate collectionView:collectionView didEndDisplayingCell:cell forItemAtIndexPath:indexPath];
     }
+    
+    if ([cell respondsToSelector:@selector(cellDidDisappear)]){
+        [(UICollectionViewCell<DJCollectionViewVMCellDelegate> *)cell cellDidDisappear];
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didEndDisplayingSupplementaryView:(UICollectionReusableView *)view forElementOfKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath
@@ -98,8 +103,6 @@
     }
 }
 
-// These methods provide support for copy/paste actions on cells.
-// All three should be implemented if any are.
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: shouldShowMenuForItemAtIndexPath:)]){
