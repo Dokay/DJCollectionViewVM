@@ -11,13 +11,9 @@
 
 @implementation DJCollectionViewVMCell
 
-- (id)initWithFrame:(CGRect)frame
+- (UICollectionViewLayoutAttributes *)preferredLayoutAttributesFittingAttributes:(UICollectionViewLayoutAttributes *)layoutAttributes NS_AVAILABLE_IOS(8_0)
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    return layoutAttributes;
 }
 
 + (CGSize)sizeWithRow:(DJCollectionViewVMRow *)row collectionViewVM:(DJCollectionViewVM *)collectionViewVM

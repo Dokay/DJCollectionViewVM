@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.source_files  = "Classes", "DJCollectionViewVM/**/*.{h,m}"
   s.exclude_files = "Classes/Exclude"
 
-  s.public_header_files = "DJCollectionViewVM/Classes/**/*.h"
+  s.public_header_files = "DJCollectionViewVM/**/*.h"
 
   s.requires_arc = true
 
