@@ -83,6 +83,11 @@ static const NSString *kConstContent = @"There are moments in life when you miss
             [self testCustomResuseHeadViewWithNib];
         }
             break;
+        case 10:
+        {
+            [self testLongTapActions];
+        }
+            break;
         default:
             break;
     }
@@ -108,7 +113,9 @@ static const NSString *kConstContent = @"There are moments in life when you miss
                                 @{@"title":@"CustomResuseHeadViewDemo",
                                   @"jumpID":@(8)},
                                 @{@"title":@"AutoLayoutReusableWithNibDemo",
-                                  @"jumpID":@(9)},];
+                                  @"jumpID":@(9)},
+                                @{@"title":@"LongTapActions",
+                                  @"jumpID":@(10)},];
     
     __weak ViewController *weakSelf = self;
     
@@ -390,6 +397,36 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     
     [self.collectionView reloadData];
 }
+
+- (void)testLongTapActions
+{
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTextFrameCell";
+    [self.collectionVM removeAllSections];
+    
+    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
+    contentSection.minimumLineSpacing = 5.0f;
+    contentSection.minimumInteritemSpacing = 10.0f;
+    [self.collectionVM addSection:contentSection];
+    
+    NSArray *wordsArray = [kConstContent componentsSeparatedByString:@" "];
+    for (NSInteger i = 0; i < wordsArray.count; i ++) {
+        DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
+        row.title = wordsArray[i];
+        row.sizeCaculateType = DJCellSizeCaculateAutoFrameLayout;
+        [row setCopyHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap copy with row:%ld",rowVM.indexPath.row);
+        }];
+        [row setCutHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap cut with row:%ld",rowVM.indexPath.row);
+        }];
+        [row setPasteHandler:^(DJCollectionViewVMRow *rowVM) {
+            NSLog(@"tap paste with row:%ld",rowVM.indexPath.row);
+        }];
+        [contentSection addRow:row];
+    }
+    [self.collectionView reloadData];
+}
+
 
 #pragma mark - getter
 - (UICollectionView *)collectionView

@@ -108,13 +108,27 @@
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: shouldShowMenuForItemAtIndexPath:)]){
         return [self.delegate collectionView:collectionView shouldShowMenuForItemAtIndexPath:indexPath];
     }
-    return NO;
+    DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+    return (rowVM.copyHandler || rowVM.pasteHandler);
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(nullable id)sender
 {
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: canPerformAction: forItemAtIndexPath: withSender:)]){
         return [self.delegate collectionView:collectionView canPerformAction:action forItemAtIndexPath:indexPath withSender:sender];
+    }
+    
+    DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+    if (rowVM.copyHandler && action == @selector(copy:)){
+        return YES;
+    }
+    if (rowVM.pasteHandler && action == @selector(paste:)){
+        return YES;
+    }
+    if (rowVM.cutHandler && action == @selector(cut:)){
+        return YES;
     }
     return NO;
 }
@@ -123,6 +137,18 @@
 {
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: canPerformAction: forItemAtIndexPath: withSender:)]){
         [self.delegate collectionView:collectionView performAction:action forItemAtIndexPath:indexPath withSender:sender];
+    }
+    
+    DJCollectionViewVMSection *sectionVM = [self.sections objectAtIndex:indexPath.section];
+    DJCollectionViewVMRow *rowVM = [sectionVM.rows objectAtIndex:indexPath.row];
+    if (action == @selector(copy:) && rowVM.copyHandler) {
+        rowVM.copyHandler(rowVM);
+    }
+    if (action == @selector(paste:) && rowVM.pasteHandler) {
+        rowVM.pasteHandler(rowVM);
+    }
+    if (action == @selector(cut:) && rowVM.cutHandler) {
+        rowVM.cutHandler(rowVM);
     }
 }
 

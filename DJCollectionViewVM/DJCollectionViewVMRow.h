@@ -75,6 +75,10 @@ typedef NS_ENUM(NSInteger,DJCellSizeCaculateType){
 @property (nonatomic, copy) BOOL (^moveCellHandler)(id rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath) NS_AVAILABLE_IOS(9_0);
 @property (nonatomic, copy) void (^moveCellCompletionHandler)(id rowVM, NSIndexPath *sourceIndexPath, NSIndexPath *destinationIndexPath) NS_AVAILABLE_IOS(9_0);
 
+@property (copy, readwrite, nonatomic) void (^cutHandler)(id rowVM);
+@property (copy, readwrite, nonatomic) void (^copyHandler)(id rowVM);
+@property (copy, readwrite, nonatomic) void (^pasteHandler)(id rowVM);
+
 + (instancetype)row;
 
 - (NSIndexPath *)indexPath;
