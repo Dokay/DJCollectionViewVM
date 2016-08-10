@@ -18,7 +18,7 @@
 		4E1FB0181D3E690900F82119 /* DJCollectionViewVMCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00D1D3E690900F82119 /* DJCollectionViewVMCell.m */; };
 		4E1FB0191D3E690900F82119 /* DJCollectionViewVMRow.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB00F1D3E690900F82119 /* DJCollectionViewVMRow.m */; };
 		4E1FB01A1D3E690900F82119 /* DJCollectionViewVMSection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0111D3E690900F82119 /* DJCollectionViewVMSection.m */; };
-		4E1FB01B1D3E690900F82119 /* DJPrefetchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0131D3E690900F82119 /* DJPrefetchManager.m */; };
+		4E1FB01B1D3E690900F82119 /* DJCollectionViewPrefetchManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0131D3E690900F82119 /* DJCollectionViewPrefetchManager.m */; };
 		4E1FB0251D3E691300F82119 /* DJCollectionViewImageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */; };
 		4E1FB0271D3E691300F82119 /* DJCollectionViewTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0231D3E691300F82119 /* DJCollectionViewTitleCell.m */; };
 		4E1FB02B1D3E6A7600F82119 /* DJCollectionViewLongTitleCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4E1FB0291D3E6A7600F82119 /* DJCollectionViewLongTitleCell.m */; };
@@ -56,8 +56,8 @@
 		4E1FB00F1D3E690900F82119 /* DJCollectionViewVMRow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewVMRow.m; sourceTree = "<group>"; };
 		4E1FB0101D3E690900F82119 /* DJCollectionViewVMSection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVMSection.h; sourceTree = "<group>"; };
 		4E1FB0111D3E690900F82119 /* DJCollectionViewVMSection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewVMSection.m; sourceTree = "<group>"; };
-		4E1FB0121D3E690900F82119 /* DJPrefetchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJPrefetchManager.h; sourceTree = "<group>"; };
-		4E1FB0131D3E690900F82119 /* DJPrefetchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJPrefetchManager.m; sourceTree = "<group>"; };
+		4E1FB0121D3E690900F82119 /* DJCollectionViewPrefetchManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewPrefetchManager.h; sourceTree = "<group>"; };
+		4E1FB0131D3E690900F82119 /* DJCollectionViewPrefetchManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewPrefetchManager.m; sourceTree = "<group>"; };
 		4E1FB01E1D3E691300F82119 /* DJCollectionViewImageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewImageCell.h; sourceTree = "<group>"; };
 		4E1FB01F1D3E691300F82119 /* DJCollectionViewImageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DJCollectionViewImageCell.m; sourceTree = "<group>"; };
 		4E1FB0221D3E691300F82119 /* DJCollectionViewTitleCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewTitleCell.h; sourceTree = "<group>"; };
@@ -113,8 +113,8 @@
 				4E1B6C851D3F8FD400E25432 /* DJCollectionViewVMReusable.m */,
 				4E1B6C871D3F8FFF00E25432 /* DJCollectionViewVMReusableView.h */,
 				4E1B6C881D3F8FFF00E25432 /* DJCollectionViewVMReusableView.m */,
-				4E1FB0121D3E690900F82119 /* DJPrefetchManager.h */,
-				4E1FB0131D3E690900F82119 /* DJPrefetchManager.m */,
+				4E1FB0121D3E690900F82119 /* DJCollectionViewPrefetchManager.h */,
+				4E1FB0131D3E690900F82119 /* DJCollectionViewPrefetchManager.m */,
 			);
 			path = DJCollectionViewVM;
 			sourceTree = "<group>";
@@ -257,7 +257,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4E1FB0171D3E690900F82119 /* DJCollectionViewVM.m in Sources */,
-				4E1FB01B1D3E690900F82119 /* DJPrefetchManager.m in Sources */,
+				4E1FB01B1D3E690900F82119 /* DJCollectionViewPrefetchManager.m in Sources */,
 				4E1FB0271D3E691300F82119 /* DJCollectionViewTitleCell.m in Sources */,
 				4E1B6C861D3F8FD400E25432 /* DJCollectionViewVMReusable.m in Sources */,
 				4E1FB0251D3E691300F82119 /* DJCollectionViewImageCell.m in Sources */,

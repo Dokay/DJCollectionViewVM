@@ -1,5 +1,5 @@
 //
-//  DJPrefetchManager.h
+//  DJCollectionViewPrefetchManager.h
 //  DJComponentTableViewVM
 //
 //  Created by Dokay on 16/7/7.
@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 @import UIKit;
 
-@interface DJPrefetchManager : NSObject
+@interface DJCollectionViewPrefetchManager : NSObject
 
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView;
 

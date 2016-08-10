@@ -13,7 +13,7 @@
 #import "DJCollectionViewVM+UIScrollViewDelegate.h"
 #import "DJCollectionViewVM+UICollectionViewDelegate.h"
 #import "DJCollectionViewVM+FlowLayout.h"
-#import "DJPrefetchManager.h"
+#import "DJCollectionViewPrefetchManager.h"
 
 @interface DJCollectionViewVM()<DJCollectionViewDataSourcePrefetching>
 
@@ -22,7 +22,7 @@
 @property (nonatomic, strong) NSMutableDictionary *registeredReusableClasses;
 @property (nonatomic, strong) NSMutableDictionary *registeredCaculateSizeCells;
 @property (nonatomic, strong) NSMutableArray *mutableSections;
-@property (nonatomic, strong) DJPrefetchManager *prefetchManager;
+@property (nonatomic, strong) DJCollectionViewPrefetchManager *prefetchManager;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGesture;
 
 @end
@@ -57,7 +57,7 @@
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
         self.registeredReusableClasses = [[NSMutableDictionary alloc] init];
-    
+        
         self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
         [self.collectionView addGestureRecognizer:self.longPressGesture];
         [self registerDefaultClasses];
@@ -81,7 +81,7 @@
 - (void)registerDefaultClasses
 {
     self[@"DJCollectionViewVMRow"] = @"DJCollectionViewVMCell";
-
+    
     [self registReusableViewClassName:NSStringFromClass([DJCollectionViewVMReusableView class]) forReusableVMClassName:kHeadReuseIdentifier];
 }
 
@@ -338,17 +338,33 @@
 
 - (void)setBPreetchEnabled:(BOOL)bPreetchEnabled
 {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED < 100000
-    self.prefetchManager.bPreetchEnabled = bPreetchEnabled;
-#else
-    if (bPreetchEnabled) {
-        self.collectionView.prefetchDataSource = (id<DJCollectionViewDataSourcePrefetching>)self;
-        self.collectionView.prefetchingEnabled = YES;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    if ([self.collectionView respondsToSelector:@selector(setPrefetchDataSource:)]) {
+        if (bPreetchEnabled) {
+            [self.collectionView performSelector:@selector(setPrefetchDataSource:) withObject:(id<DJCollectionViewDataSourcePrefetching>)self];
+        }else{
+            [self.collectionView performSelector:@selector(setPrefetchDataSource:) withObject:nil];
+        }
+        [self setiOS10PrefetchEnable:bPreetchEnabled];
     }else{
-        self.collectionView.prefetchDataSource = nil;
-        self.collectionView.prefetchingEnabled = NO;
+        self.prefetchManager.bPreetchEnabled = bPreetchEnabled;
     }
-#endif
+#pragma clang diagnostic pop
+}
+
+- (void)setiOS10PrefetchEnable:(BOOL)bEnable
+{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wundeclared-selector"
+    UICollectionView *targetCollectionView = self.collectionView;
+    NSMethodSignature *signature = [[UICollectionView class] instanceMethodSignatureForSelector: @selector(setPrefetchingEnabled:)];
+    NSInvocation* invocation = [NSInvocation invocationWithMethodSignature: signature];
+    [invocation setTarget:targetCollectionView];
+    [invocation setSelector:@selector(setPrefetchingEnabled:)];
+    [invocation setArgument:&bEnable atIndex: 2];
+    [invocation invoke];
+#pragma clang diagnostic pop
 }
 
 #pragma mark - sections manage
@@ -540,10 +556,10 @@
 }
 
 #pragma mark - getter
-- (DJPrefetchManager *)prefetchManager
+- (DJCollectionViewPrefetchManager *)prefetchManager
 {
     if (_prefetchManager == nil) {
-        _prefetchManager = [[DJPrefetchManager alloc] initWithScrollView:self.collectionView];
+        _prefetchManager = [[DJCollectionViewPrefetchManager alloc] initWithScrollView:self.collectionView];
         __weak DJCollectionViewVM *weakSelf = self;
         [_prefetchManager setPrefetchCompletion:^(NSArray *addedArray, NSArray *cancelArray) {
             for (NSIndexPath *indexPath in addedArray) {
