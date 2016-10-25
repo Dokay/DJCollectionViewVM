@@ -144,9 +144,9 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testNormal
 {
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
     [self.collectionVM removeAllSections];
     
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
     contentSection.minimumLineSpacing = 10.0f;
     contentSection.minimumInteritemSpacing = 10.0f;

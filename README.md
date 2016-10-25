@@ -1,9 +1,17 @@
-# DJCollectionVM
+DJCollectionViewVM
+==========
 
-__DJCollectionViewVM is a light ViewModel implementation for UICollectionView.__
+![License MIT](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)
+![Pod version](https://img.shields.io/cocoapods/v/DJCollectionViewVM.svg?style=flat)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![Platform info](https://img.shields.io/cocoapods/p/DJCollectionViewVM.svg?style=flat)](http://cocoadocs.org/docsets/YTKNetwork)
 
-##Features
-* less code and more flexible to implement UICollectionView with UICollectionViewFlowLayout;
+## What
+
+__DJCollectionViewVM is a lightweight ViewModel implementation for UICollectionView.__
+
+## Features
+* less code and more flexible to implement linear layout using UICollectionView with UICollectionViewFlowLayout;
 * dynamic cell and SupplementaryView size caculate;
 * header and footer support like UITableView;
 * prefetch for iOS 7.0+;
@@ -33,61 +41,24 @@ pod 'DJCollectionViewVM'
 ```objc
 - (void)testNormal
 {
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
     contentSection.minimumLineSpacing = 10.0f;
     contentSection.minimumInteritemSpacing = 10.0f;
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 15; i ++) {
-        NSInteger random = arc4random() % 10;
-        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.itemSize = CGSizeMake(random * 20, 40);
-        row.backgroundColor = [UIColor redColor];
-        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"tap %@",rowVM.indexPath);
-        }];
-        [contentSection addRow:row];
-    }
-    
-    DJCollectionViewVMSection *contentBigSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
-    contentBigSection.minimumLineSpacing = 10.0f;
-    contentBigSection.minimumInteritemSpacing = 10.0f;
-    [self.collectionVM addSection:contentBigSection];
-    for (NSInteger i = 0; i < 20; i ++) {
-        NSInteger random = arc4random() % 5;
-        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.itemSize = CGSizeMake(random * 20, random * 10);
-        row.backgroundColor = [UIColor purpleColor];
-        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"tap %@",rowVM.indexPath);
-        }];
-        [contentBigSection addRow:row];
-    }
-    
-    [self.collectionView reloadData];
-}
-
-- (void)testAutoLayoutWithNib
-{
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewLongTitleCell";
-    [self.collectionVM removeAllSections];
-    
-    DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
-    contentSection.minimumLineSpacing = 10.0f;
-    contentSection.minimumInteritemSpacing = 10.0f;
-    [self.collectionVM addSection:contentSection];
-    
-    NSArray *wordsArray = [kConstContent componentsSeparatedByString:@" "];
-    for (NSInteger i = 0; i < wordsArray.count; i ++) {
+    for (NSInteger i = 0; i < 100; i ++) {
         DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
-        row.title = wordsArray[i];
-        row.sizeCaculateType = DJCellSizeCaculateAutoLayout;
+        row.itemSize = CGSizeMake(100, 100);
+        row.backgroundColor = [UIColor redColor];
+        row.title = [NSString stringWithFormat:@"%@",@(i)];
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
         }];
         [contentSection addRow:row];
     }
+    
     [self.collectionView reloadData];
 }
 
@@ -130,9 +101,7 @@ pod 'DJCollectionViewVM'
   </tr>
 </table>
 
-* For exsist cells in your project
-    1.If the super class of your cell is UICollectionViewCell ,just change it to DJCollectionViewVMCell.
-    2.If tht super class of your cell is your custom class ,you need to implement the protocol DJCollectionViewVMCellDelegate or change it to DJCollectionViewVMCell.
+* For exsist cells in your project<br />1.If the super class of your cell is UICollectionViewCell ,just change it to DJCollectionViewVMCell.<br />2.If tht super class of your cell is your custom class ,you need to implement the protocol DJCollectionViewVMCellDelegate or change it to DJCollectionViewVMCell.
 
 
 ##UITableView
