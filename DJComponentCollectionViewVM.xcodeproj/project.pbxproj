@@ -95,14 +95,14 @@
 		4E1FB0031D3E690900F82119 /* DJCollectionViewVM */ = {
 			isa = PBXGroup;
 			children = (
+				4E1FB00A1D3E690900F82119 /* DJCollectionViewVM.h */,
+				4E1FB00B1D3E690900F82119 /* DJCollectionViewVM.m */,
 				4E1FB0041D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.h */,
 				4E1FB0051D3E690900F82119 /* DJCollectionViewVM+UICollectionViewDelegate.m */,
 				4E1FB0061D3E690900F82119 /* DJCollectionViewVM+FlowLayout.h */,
 				4E1FB0071D3E690900F82119 /* DJCollectionViewVM+FlowLayout.m */,
 				4E1FB0081D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.h */,
 				4E1FB0091D3E690900F82119 /* DJCollectionViewVM+UIScrollViewDelegate.m */,
-				4E1FB00A1D3E690900F82119 /* DJCollectionViewVM.h */,
-				4E1FB00B1D3E690900F82119 /* DJCollectionViewVM.m */,
 				4E1FB00C1D3E690900F82119 /* DJCollectionViewVMCell.h */,
 				4E1FB00D1D3E690900F82119 /* DJCollectionViewVMCell.m */,
 				4E1FB00E1D3E690900F82119 /* DJCollectionViewVMRow.h */,
@@ -380,7 +380,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DJComponentCollectionViewVM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dj226.DJComponentCollectionViewVM;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -396,7 +396,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = DJComponentCollectionViewVM/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dj226.DJComponentCollectionViewVM;
 				PRODUCT_NAME = "$(TARGET_NAME)";

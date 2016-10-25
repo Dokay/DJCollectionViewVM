@@ -76,6 +76,13 @@
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegate)] && [self.delegate respondsToSelector:@selector(collectionView: willDisplayCell: forItemAtIndexPath:)]){
         [self.delegate collectionView:collectionView willDisplayCell:cell forItemAtIndexPath:indexPath];
     }
+    
+    if([self.collectionView respondsToSelector:@selector(setPrefetchingEnabled:)]){
+        //cellWillAppear called in method: collectionView:cellForItemAtIndexPath: below iOS 10
+        if([cell respondsToSelector:@selector(cellWillAppear)]){
+            [cell performSelector:@selector(cellWillAppear)];
+        }
+    }
 }
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplaySupplementaryView:(UICollectionReusableView *)view forElementKind:(NSString *)elementKind atIndexPath:(NSIndexPath *)indexPath NS_AVAILABLE_IOS(8_0)

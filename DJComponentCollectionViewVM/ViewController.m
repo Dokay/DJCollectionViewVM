@@ -146,34 +146,20 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     [self.collectionVM removeAllSections];
     
+    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
     contentSection.minimumLineSpacing = 10.0f;
     contentSection.minimumInteritemSpacing = 10.0f;
     [self.collectionVM addSection:contentSection];
-    for (NSInteger i = 0; i < 15; i ++) {
-        NSInteger random = arc4random() % 10;
-        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.itemSize = CGSizeMake(random * 20, 40);
+    for (NSInteger i = 0; i < 100; i ++) {
+        DJCollectionViewTitleCellRow *row = [DJCollectionViewTitleCellRow new];
+        row.itemSize = CGSizeMake(100, 100);
         row.backgroundColor = [UIColor redColor];
+        row.title = [NSString stringWithFormat:@"%@",@(i)];
         [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
             NSLog(@"tap %@",rowVM.indexPath);
         }];
         [contentSection addRow:row];
-    }
-    
-    DJCollectionViewVMSection *contentBigSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
-    contentBigSection.minimumLineSpacing = 10.0f;
-    contentBigSection.minimumInteritemSpacing = 10.0f;
-    [self.collectionVM addSection:contentBigSection];
-    for (NSInteger i = 0; i < 20; i ++) {
-        NSInteger random = arc4random() % 5;
-        DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];
-        row.itemSize = CGSizeMake(random * 20, random * 10);
-        row.backgroundColor = [UIColor purpleColor];
-        [row setSelectionHandler:^(DJCollectionViewVMRow *rowVM) {
-            NSLog(@"tap %@",rowVM.indexPath);
-        }];
-        [contentBigSection addRow:row];
     }
     
     [self.collectionView reloadData];
@@ -283,6 +269,9 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     contentSection.minimumLineSpacing = 10.0f;
     contentSection.minimumInteritemSpacing = 10.0f;
     [self.collectionVM addSection:contentSection];
+    
+    self.collectionVM.prefetchingEnabled = YES;
+    
     for (NSInteger i = 0; i < 1000; i ++) {
         NSInteger random = arc4random() % 10;
         DJCollectionViewVMRow *row = [DJCollectionViewVMRow new];

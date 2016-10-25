@@ -139,7 +139,6 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    [self checkPrefetchEnabled];
     return self.sections.count;
 }
 
@@ -158,7 +157,7 @@
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
     
-    NSString *cellIdentifier = [NSString stringWithFormat:@"DJCollectionViewVMDefaultIdentifier_%@", [row class]];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"DefaultIdentifier_%@", indexPath];
     
     Class cellClass = [self classForCellAtIndexPath:indexPath];
     if (cellClass) {
@@ -194,7 +193,12 @@
             [self.delegate collectionView:collectionView didLoadCell:cell forRowAtIndexPath:indexPath];
     }
     
-    [cell cellWillAppear];
+    if (![self.collectionView respondsToSelector:@selector(setPrefetchingEnabled:)]) {
+        [cell cellWillAppear];
+    }else{
+        //iOS 10 +
+        //if prefetchingEnabled is YES (default), cellForItemAtIndexPath will not called always when cell appears in iOS 10.cellWillAppear called in method: collectionView:willDisplayCell:forItemAtIndexPath: NS_AVAILABLE_IOS(8_0)
+    }
     
     return cell;
 }
@@ -323,32 +327,32 @@
 }
 
 #pragma mark - prefetch methods
-- (void)checkPrefetchEnabled
-{
-    for (DJCollectionViewVMSection *sectionVM in self.sections) {
-        for (DJCollectionViewVMRow *rowVM in sectionVM.rows) {
-            if (rowVM.prefetchHander || rowVM.prefetchCancelHander) {
-                self.bPreetchEnabled = YES;
-                return;
-            }
-        }
-    }
-    self.bPreetchEnabled = NO;
-}
+//- (void)checkPrefetchEnabled
+//{
+//    for (DJCollectionViewVMSection *sectionVM in self.sections) {
+//        for (DJCollectionViewVMRow *rowVM in sectionVM.rows) {
+//            if (rowVM.prefetchHander || rowVM.prefetchCancelHander) {
+//                self.bPreetchEnabled = YES;
+//                return;
+//            }
+//        }
+//    }
+//    self.bPreetchEnabled = NO;
+//}
 
-- (void)setBPreetchEnabled:(BOOL)bPreetchEnabled
+- (void)setPrefetchingEnabled:(BOOL)prefetchingEnabled
 {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
     if ([self.collectionView respondsToSelector:@selector(setPrefetchDataSource:)]) {
-        if (bPreetchEnabled) {
+        if (prefetchingEnabled) {
             [self.collectionView performSelector:@selector(setPrefetchDataSource:) withObject:(id<DJCollectionViewDataSourcePrefetching>)self];
         }else{
             [self.collectionView performSelector:@selector(setPrefetchDataSource:) withObject:nil];
         }
-        [self setiOS10PrefetchEnable:bPreetchEnabled];
+        [self setiOS10PrefetchEnable:prefetchingEnabled];
     }else{
-        self.prefetchManager.bPreetchEnabled = bPreetchEnabled;
+        self.prefetchManager.bPreetchEnabled = prefetchingEnabled;
     }
 #pragma clang diagnostic pop
 }

@@ -42,6 +42,7 @@
 @property (nonatomic, weak) id<DJCollectionViewVMDelegate> delegate;
 @property (nonatomic, weak) id<DJCollectionViewVMDataSource> dataSource;
 @property (nonatomic, strong) NSArray *sections;
+@property (nonatomic, assign) BOOL prefetchingEnabled;
 
 - (id)initWithCollectionView:(UICollectionView *)collectionView delegate:(id<DJCollectionViewVMDelegate>)delegate;
 - (id)initWithCollectionView:(UICollectionView *)collectionView;
