@@ -49,8 +49,9 @@
 
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key;
 - (void)setObject:(id)obj forKeyedSubscript:(id <NSCopying>)key;
-- (NSString *)reusableClassNameForViewModelClassName:(NSString *)className;
+- (void)registerClass:(NSString *)rowClassName forCellClassName:(NSString *)cellClassName bundle:(NSBundle *)bundle;
 
+- (NSString *)reusableClassNameForViewModelClassName:(NSString *)className;
 - (void)registReusableViewClassName:(NSString *)reusableViewClassName forReusableVMClassName:(NSString *)reusableVMClassName;
 
 - (CGSize)sizeWithAutoLayoutCellWithIndexPath:(NSIndexPath *)indexPath;

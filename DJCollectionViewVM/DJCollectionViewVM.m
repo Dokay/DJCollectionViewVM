@@ -87,33 +87,34 @@
 
 - (void)registerClass:(NSString *)rowClass forCellWithReuseIdentifier:(NSString *)identifier
 {
-    [self registerClass:rowClass forCellWithReuseIdentifier:identifier bundle:nil];
+    [self registerClass:rowClass forCellClassName:identifier bundle:nil];
 }
 
-- (void)registerClass:(NSString *)rowClass forCellWithReuseIdentifier:(NSString *)identifier bundle:(NSBundle *)bundle
+- (void)registerClass:(NSString *)rowClassName forCellClassName:(NSString *)cellClassName bundle:(NSBundle *)bundle
 {
-    NSAssert(NSClassFromString(rowClass), ([NSString stringWithFormat:@"Row class '%@' does not exist.", rowClass]));
-    NSAssert(NSClassFromString(identifier), ([NSString stringWithFormat:@"Cell class '%@' does not exist.", identifier]));
-    self.registeredClasses[(id <NSCopying>)NSClassFromString(rowClass)] = NSClassFromString(identifier);
+    NSAssert(NSClassFromString(rowClassName), ([NSString stringWithFormat:@"Row class '%@' does not exist.", rowClassName]));
+    NSAssert(NSClassFromString(cellClassName), ([NSString stringWithFormat:@"Cell class '%@' does not exist.", cellClassName]));
+    self.registeredClasses[rowClassName] = cellClassName;
     
     if (!bundle)
     {
         bundle = [NSBundle mainBundle];
     }
     
-    if ([bundle pathForResource:identifier ofType:@"nib"]) {
-        self.registeredXIBs[identifier] = rowClass;
-        [self.collectionView registerNib:[UINib nibWithNibName:identifier bundle:bundle] forCellWithReuseIdentifier:rowClass];
+    if ([bundle pathForResource:cellClassName ofType:@"nib"]) {
+        self.registeredXIBs[cellClassName] = rowClassName;
+        [self.collectionView registerNib:[UINib nibWithNibName:cellClassName bundle:bundle] forCellWithReuseIdentifier:rowClassName];
     }else{
-        [self.collectionView registerClass:NSClassFromString(identifier) forCellWithReuseIdentifier:identifier];
+        [self.collectionView registerClass:NSClassFromString(cellClassName) forCellWithReuseIdentifier:rowClassName];
     }
 }
 
-- (Class)classForCellAtIndexPath:(NSIndexPath *)indexPath
+- (NSString *)classNameForCellAtIndexPath:(NSIndexPath *)indexPath
 {
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     NSObject *row = [section.rows objectAtIndex:indexPath.row];
-    return [self.registeredClasses objectForKey:row.class];
+    NSString *cellClassName = [self.registeredClasses objectForKey:NSStringFromClass(row.class)];
+    return cellClassName;
 }
 
 - (NSString *)reusableClassNameForViewModelClassName:(NSString *)className
@@ -157,20 +158,17 @@
     DJCollectionViewVMSection *section = [self.mutableSections objectAtIndex:indexPath.section];
     DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
     
-    NSString *cellIdentifier = [NSString stringWithFormat:@"DefaultIdentifier_%@", indexPath];
+    NSString *cellIdentifier = [NSString stringWithFormat:@"DJCollectionVMDefaultIdentifier_%@", indexPath];
     
-    Class cellClass = [self classForCellAtIndexPath:indexPath];
-    if (cellClass) {
-        cellIdentifier = NSStringFromClass(cellClass);
-    }
-    
-    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
-        cellIdentifier = self.registeredXIBs[NSStringFromClass(cellClass)];
+    NSString *cellClassName = NSStringFromClass(row.class);
+    if (cellClassName) {
+        cellIdentifier = cellClassName;
     }
     
     UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell = [collectionView dequeueReusableCellWithReuseIdentifier:cellIdentifier forIndexPath:indexPath];
-    if (!cell) {
-        NSAssert(NO, @"UICollectionViewCell can not be nil");
+    if (cell == nil) {
+        NSString *crashReason = [NSString stringWithFormat:@"cellForRowAtIndexPath: (section:%@ row:%@) returns nil,make sure you have resisted %@ corectly.",@(indexPath.section),@(indexPath.row),row.class];
+        @throw([NSException exceptionWithName: @"DJCollectionVM Exception" reason:crashReason userInfo:nil]);
     }
     
     cell.rowIndex = indexPath.row;
@@ -423,9 +421,8 @@
 {
     UICollectionViewCell<DJCollectionViewVMCellDelegate> *cell;
     
-    Class cellClass = [self classForCellAtIndexPath:indexPath];
-    NSString *cellClassName = NSStringFromClass(cellClass);
-    if (self.registeredXIBs[NSStringFromClass(cellClass)]) {
+    NSString *cellClassName = [self classNameForCellAtIndexPath:indexPath];
+    if (self.registeredXIBs[cellClassName]) {
         cell = [self.registeredCaculateSizeCells objectForKey:cellClassName];
         if (cell == nil) {
             cell = [[NSBundle mainBundle] loadNibNamed:cellClassName owner:self options:nil][0];
@@ -434,7 +431,7 @@
     }else{
         cell = [self.registeredCaculateSizeCells objectForKey:cellClassName];
         if (cell == nil) {
-            cell = [[cellClass alloc] init];
+            cell = [[NSClassFromString(cellClassName) alloc] init];
             [self.registeredCaculateSizeCells setObject:cell forKey:cellClassName];
         }
     }

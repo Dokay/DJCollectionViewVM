@@ -26,8 +26,8 @@
         if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {
             if (row.itemSize.height == 0 || row.dj_caculateSizeForceRefresh) {
                 if (row.sizeCaculateType == DJCellSizeCaculateDefault) {
-                    Class cellClass = [self objectAtKeyedSubscript:(id<NSCopying>)row.class];
-                    row.itemSize = [cellClass sizeWithRow:row collectionViewVM:self];
+                    NSString *cellClassName = [self objectAtKeyedSubscript:NSStringFromClass(row.class)];
+                    row.itemSize = [NSClassFromString(cellClassName) sizeWithRow:row collectionViewVM:self];
                 }else{
                     //auto size
                     row.itemSize = [self sizeWithAutoLayoutCellWithIndexPath:indexPath];
