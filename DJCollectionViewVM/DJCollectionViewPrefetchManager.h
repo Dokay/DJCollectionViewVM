@@ -14,6 +14,6 @@
 - (instancetype)initWithScrollView:(UIScrollView *)scrollView;
 
 @property (nonatomic, copy) void(^prefetchCompletion)(NSArray *added,NSArray *removed);
-@property (nonatomic, assign) BOOL bPreetchEnabled;
+@property (nonatomic, assign) BOOL bPrefetchEnabled;
 
 @end

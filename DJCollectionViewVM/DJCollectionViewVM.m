@@ -350,7 +350,7 @@
         }
         [self setiOS10PrefetchEnable:prefetchingEnabled];
     }else{
-        self.prefetchManager.bPreetchEnabled = prefetchingEnabled;
+        self.prefetchManager.bPrefetchEnabled = prefetchingEnabled;
     }
 #pragma clang diagnostic pop
 }

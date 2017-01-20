@@ -33,7 +33,7 @@ typedef NS_ENUM(NSInteger,DJPrefetchScrollDirection) {
         self.scrollView = scrollView;
         [scrollView addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
         
-        _bPreetchEnabled = NO;
+        _bPrefetchEnabled = NO;
         _prefetchRectSizeRatio = 1.0f;//next screen
         _updateSizeRatio = 0.1;
     }
@@ -56,8 +56,8 @@ typedef NS_ENUM(NSInteger,DJPrefetchScrollDirection) {
 
 - (void)setPreetchEnabled:(BOOL)bPreetchEnabled
 {
-    _bPreetchEnabled = bPreetchEnabled;
-    if (_bPreetchEnabled) {
+    _bPrefetchEnabled = bPreetchEnabled;
+    if (_bPrefetchEnabled) {
         [self checkPrefetching];
     }else{
         _lastPrefetchedOffset = CGPointZero;
@@ -71,7 +71,7 @@ typedef NS_ENUM(NSInteger,DJPrefetchScrollDirection) {
                        context:(void *)context
 {
     if (object == self.scrollView) {
-        if (self.bPreetchEnabled) {
+        if (self.bPrefetchEnabled) {
             [self checkPrefetching];
         }
     } else {

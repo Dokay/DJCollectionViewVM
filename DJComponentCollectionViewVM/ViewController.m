@@ -12,6 +12,10 @@
 #import "DJCollectionViewTitleCell.h"
 #import "DJCollectionViewLongTitleCell.h"
 #import "DJCollectionViewReusableTitleView.h"
+#import "DJCollectionViewTextFrameCell.h"
+#import "DJCollectionViewTitleCellRow.h"
+#import "DJCollectionViewTextFrameCell.h"
+#import "DJCollectionViewReusableTitleWithNibView.h"
 
 static const NSString *kConstContent = @"There are moments in life when you miss someone so much that you just want to pick them from your dreams and hug them for real! Dream what you want to dream;go where you want to go;be what you want to be,because you have only one life and one chance to do all the things you want to do.\n May you have enough happiness to make you sweet,enough trials to make you strong,enough sorrow to keep you human,enough hope to make you happy? Always put yourself in others’shoes.If you feel that it hurts you,it probably hurts the other person, too. \nThe happiest of people don’t necessarily have the best of everything;they just make the most of everything that comes along their way.Happiness lies for those who cry,those who hurt, those who have searched,and those who have tried,for only they can appreciate the importance of people. \n who have touched their lives.Love begins with a smile,grows with a kiss and ends with a tear.The brightest future will always be based on a forgotten past, you can’t go on well in lifeuntil you let go of your past failures and heartaches.\n When you were born,you were crying and everyone around you was smiling.Live your life so that when you die,you're the one who is smiling and everyone around you is crying.\n Please send this message to those people who mean something to you,to those who have touched your life in one way or another,to those who make you smile when you really need it,to those that make you see the brighter side of things when you are really down,to those who you want to let them know that you appreciate their friendship.And if you don’t, don’t worry,nothing bad will happen to you,you will just miss out on the opportunity to brighten someone’s day with this message.";
 
@@ -119,7 +123,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
     
     __weak ViewController *weakSelf = self;
     
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewTitleCellRow, DJCollectionViewTitleCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:20];
@@ -144,7 +148,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testNormal
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTitleCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewTitleCellRow, DJCollectionViewTitleCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -167,7 +171,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testAutoLayoutWithNib
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewLongTitleCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewTitleCellRow, DJCollectionViewLongTitleCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -190,7 +194,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testAutoLayoutWithoutNib
 {
-    self.collectionVM[@"DJCollectionViewImageRow"] = @"DJCollectionViewImageCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewImageRow, DJCollectionViewImageCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -211,7 +215,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testFrameLayout
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTextFrameCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewTitleCellRow, DJCollectionViewTextFrameCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -234,7 +238,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testMoveRow
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTextFrameCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewTitleCellRow, DJCollectionViewTextFrameCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];
@@ -330,7 +334,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     [self.collectionVM removeAllSections];
     
-    [self.collectionVM registReusableViewClassName:@"DJCollectionViewReusableTitleView" forReusableVMClassName:@"DJCollectionViewReusableTitle"];
+    DJCollectionViewVMResuableRegister(self.collectionVM, DJCollectionViewReusableTitle, DJCollectionViewReusableTitleView);
     
     DJCollectionViewReusableTitle *reusableHeadVM = [DJCollectionViewReusableTitle new];
     reusableHeadVM.title = @"HeadView";
@@ -359,7 +363,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 {
     [self.collectionVM removeAllSections];
     
-    [self.collectionVM registReusableViewClassName:@"DJCollectionViewReusableTitleWithNibView" forReusableVMClassName:@"DJCollectionViewReusableTitle"];
+    DJCollectionViewVMResuableRegister(self.collectionVM, DJCollectionViewReusableTitle, DJCollectionViewReusableTitleWithNibView);
     
     DJCollectionViewReusableTitle *reusableHeadVM = [DJCollectionViewReusableTitle new];
     reusableHeadVM.backgroundColor = [UIColor brownColor];
@@ -389,7 +393,7 @@ static const NSString *kConstContent = @"There are moments in life when you miss
 
 - (void)testLongTapActions
 {
-    self.collectionVM[@"DJCollectionViewTitleCellRow"] = @"DJCollectionViewTextFrameCell";
+    DJCollectionViewVMCellRegister(self.collectionVM, DJCollectionViewTitleCellRow, DJCollectionViewTextFrameCell);
     [self.collectionVM removeAllSections];
     
     DJCollectionViewVMSection *contentSection = [DJCollectionViewVMSection sectionWithHeaderHeight:10];

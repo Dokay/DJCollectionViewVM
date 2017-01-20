@@ -13,6 +13,10 @@
 
 @import UIKit;
 
+#define DJCollectionViewVMCellRegister(DJCollectionViewVMInstance,RowVMClassName,CellClassName) [DJCollectionViewVMInstance setObject:NSStringFromClass([CellClassName class]) forKeyedSubscript:NSStringFromClass([RowVMClassName class])];
+
+#define DJCollectionViewVMResuableRegister(DJCollectionViewVMInstance,ReusableVMClassName,ReusableCellClassName) [DJCollectionViewVMInstance registReusableViewClassName:NSStringFromClass([ReusableCellClassName class]) forReusableVMClassName:NSStringFromClass([ReusableVMClassName class])];
+
 @protocol DJCollectionViewVMDelegate <UICollectionViewDelegateFlowLayout>
 
 - (void)collectionView:(UICollectionView *)collectionView willLoadCell:(UICollectionViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
