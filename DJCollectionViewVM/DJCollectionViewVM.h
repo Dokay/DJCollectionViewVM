@@ -19,6 +19,7 @@
 
 @protocol DJCollectionViewVMDelegate <UICollectionViewDelegateFlowLayout>
 
+@optional
 - (void)collectionView:(UICollectionView *)collectionView willLoadCell:(UICollectionViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)collectionView:(UICollectionView *)collectionView didLoadCell:(UICollectionViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath;

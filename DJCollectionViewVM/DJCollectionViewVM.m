@@ -35,16 +35,17 @@
     return nil;
 }
 
-- (id)initWithCollectionView:(UICollectionView *)collectionView delegate:(id<DJCollectionViewVMDelegate>)delegate
+- (id)initWithCollectionView:(UICollectionView *)collectionView
 {
-    self = [self initWithCollectionView:collectionView];
+    self = [self initWithCollectionView:collectionView delegate:nil];
     if (self){
         
     }
+    
     return self;
 }
 
-- (id)initWithCollectionView:(UICollectionView *)collectionView
+- (id)initWithCollectionView:(UICollectionView *)collectionView delegate:(id<DJCollectionViewVMDelegate>)delegate
 {
     self = [super init];
     if (self){
@@ -52,6 +53,7 @@
         collectionView.dataSource = self;
         
         self.collectionView = collectionView;
+        self.delegate = delegate;
         
         self.mutableSections   = [[NSMutableArray alloc] init];
         self.registeredClasses = [[NSMutableDictionary alloc] init];
@@ -61,8 +63,8 @@
         self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
         [self.collectionView addGestureRecognizer:self.longPressGesture];
         [self registerDefaultClasses];
+
     }
-    
     return self;
 }
 
@@ -146,8 +148,8 @@
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)sectionIndex
 {
     if (self.mutableSections.count > sectionIndex) {
-        DJCollectionViewVMSection *sections = ((DJCollectionViewVMSection *)[self.mutableSections objectAtIndex:sectionIndex]);
-        return sections.rows.count;
+        DJCollectionViewVMSection *sectionVM = ((DJCollectionViewVMSection *)[self.mutableSections objectAtIndex:sectionIndex]);
+        return sectionVM.rows.count;
     }else{
         return 0;
     }

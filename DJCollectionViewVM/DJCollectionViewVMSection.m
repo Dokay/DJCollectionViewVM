@@ -63,11 +63,9 @@
 - (id)initWithHeaderTitle:(NSString *)headerTitle footerTitle:(NSString *)footerTitle
 {
     self = [self init];
-    if (!self){
-        return nil;
+    if (self){
+
     }
-    _mutableRows = [[NSMutableArray alloc] init];
-    
     return self;
 }
 
@@ -88,7 +86,7 @@
         if (footerView) {
             self.footerReferenceSize = footerView.bounds.size;
         }
-        _mutableRows = [[NSMutableArray alloc] init];
+        
     }
     return self;
 }
@@ -97,7 +95,7 @@
 {
     self = [super init];
     if (self) {
-        
+        _mutableRows = [[NSMutableArray alloc] init];
     }
     return self;
 }
