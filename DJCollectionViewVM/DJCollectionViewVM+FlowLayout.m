@@ -22,7 +22,7 @@ if ([collectionViewLayout isKindOfClass:[UICollectionViewFlowLayout class]]) {\
     if ([self.delegate conformsToProtocol:@protocol(UICollectionViewDelegateFlowLayout)] && [self.delegate respondsToSelector:@selector(collectionView: layout: sizeForItemAtIndexPath:)]){
         return [self.delegate collectionView:collectionView layout:collectionViewLayout sizeForItemAtIndexPath:indexPath];
     }else{
-        CGSize itemSize;
+        CGSize itemSize = CGSizeZero;
         DJCollectionViewVMSection *section = [self.sections objectAtIndex:indexPath.section];
         DJCollectionViewVMRow *row = [section.rows objectAtIndex:indexPath.row];
         if (row.itemSize.height > 0) {
