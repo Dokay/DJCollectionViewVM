@@ -15,6 +15,15 @@
 #import "DJCollectionViewVM+FlowLayout.h"
 #import "DJCollectionViewPrefetchManager.h"
 
+///---------------------------
+/// @name Runtime Checks
+///---------------------------
+#define SYSTEM_VERSION_EQUAL_TO(v)                  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedSame)
+#define SYSTEM_VERSION_GREATER_THAN(v)              ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedDescending)
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN(v)                 ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] == NSOrderedAscending)
+#define SYSTEM_VERSION_LESS_THAN_OR_EQUAL_TO(v)     ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedDescending)
+
 @interface DJCollectionViewVM()<DJCollectionViewDataSourcePrefetching>
 
 @property (nonatomic, strong) NSMutableDictionary *registeredClasses;
@@ -59,11 +68,12 @@
         self.registeredClasses = [[NSMutableDictionary alloc] init];
         self.registeredXIBs    = [[NSMutableDictionary alloc] init];
         self.registeredReusableClasses = [[NSMutableDictionary alloc] init];
-        
         self.registeredCaculateSizeCells = [[NSMutableDictionary alloc] init];
-        [self.collectionView addGestureRecognizer:self.longPressGesture];
+        
         [self registerDefaultClasses];
-
+        if(SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"9.0")){
+            [self.collectionView addGestureRecognizer:self.longPressGesture];
+        }
     }
     return self;
 }
