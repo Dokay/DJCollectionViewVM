@@ -78,6 +78,14 @@
     return self;
 }
 
+- (void)dealloc
+{
+    _delegate = nil;
+    _dataSource = nil;
+    _collectionView.dataSource = nil;
+    _collectionView.delegate = nil;
+}
+
 #pragma mark - implement dictionary key value style
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key
 {
