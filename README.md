@@ -105,7 +105,7 @@ pod 'DJCollectionViewVM'
 * For exsist cells in your project<br />1.If the super class of your cell is UICollectionViewCell ,just change it to DJCollectionViewVMCell.<br />2.If tht super class of your cell is your custom class ,you need to implement the protocol DJCollectionViewVMCellDelegate or change it to DJCollectionViewVMCell.
 
 
-##UITableView
+## DJTableViewVM
 
 ViewModel for UITableView: [DJTableViewVM](http://github.com/Dokay/DJTableViewVM)
 
