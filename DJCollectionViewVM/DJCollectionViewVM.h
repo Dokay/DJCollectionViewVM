@@ -59,6 +59,12 @@
 - (NSString *)reusableClassNameForViewModelClassName:(NSString *)className;
 - (void)registReusableViewClassName:(NSString *)reusableViewClassName forReusableVMClassName:(NSString *)reusableVMClassName;
 
+
+/**
+ call reloadData for DJCollectionViewVM is recommend.
+ */
+- (void)reloadData;
+
 - (CGSize)sizeWithAutoLayoutCellWithIndexPath:(NSIndexPath *)indexPath;
 - (CGSize)sizeWithAutoLayoutReusableViewWithSection:(NSInteger)section isHead:(BOOL)bHead;
 

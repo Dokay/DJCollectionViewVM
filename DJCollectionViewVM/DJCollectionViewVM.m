@@ -86,6 +86,12 @@
     _collectionView.delegate = nil;
 }
 
+- (void)reloadData
+{
+    [self.collectionView reloadData];
+    [self.collectionView.collectionViewLayout invalidateLayout];
+}
+
 #pragma mark - implement dictionary key value style
 - (id)objectAtKeyedSubscript:(id <NSCopying>)key
 {
@@ -160,6 +166,7 @@
 #pragma mark - UICollectionViewDataSource
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
+    [collectionView.collectionViewLayout invalidateLayout];//fix crash:UICollectionView received layout attributes for a cell with an index path that does not exist: <NSIndexPath: 0xc000000000010016> {length = 2, path = 0 - 2},https://stackoverflow.com/questions/18339030/uicollectionview-assertion-error-on-stale-data
     return self.sections.count;
 }
 
