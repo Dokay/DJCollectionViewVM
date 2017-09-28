@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "DJCollectionViewVM"
-  s.version      = "0.1.5"
+  s.version      = "1.0.0"
   s.summary      = "DJCollectionViewVM is a ViewModel implementation for UICollectionView"
   s.description  = <<-DESC
                    only for private use,DJCollectionViewVM is a ViewModel implementation for UICollectionView

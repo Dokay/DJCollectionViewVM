@@ -116,6 +116,7 @@
 		4E5E2E751DBF3C16009F483D /* DJCollectionViewVMFrameWork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = DJCollectionViewVMFrameWork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E5E2E771DBF3C17009F483D /* DJCollectionViewVMFrameWork.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DJCollectionViewVMFrameWork.h; sourceTree = "<group>"; };
 		4E5E2E791DBF3C17009F483D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4ECEFFA21F7C8F6900E46D7C /* DJCollectionViewVM.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = DJCollectionViewVM.podspec; sourceTree = "<group>"; };
 		4EF326C51C881F5000478F41 /* DJComponentCollectionViewVM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DJComponentCollectionViewVM.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EF326C91C881F5000478F41 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		4EF326CB1C881F5000478F41 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -208,6 +209,7 @@
 		4EF326BC1C881F5000478F41 = {
 			isa = PBXGroup;
 			children = (
+				4ECEFFA21F7C8F6900E46D7C /* DJCollectionViewVM.podspec */,
 				4E1FB0031D3E690900F82119 /* DJCollectionViewVM */,
 				4EF326C71C881F5000478F41 /* DJComponentCollectionViewVM */,
 				4E5E2E761DBF3C17009F483D /* DJCollectionViewVMFrameWork */,
